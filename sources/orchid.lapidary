@@ -1,0 +1,12 @@
+# orchid - 8 feature-flagged detectors (lapidary detect rule family).
+# Each detect rule enables ONE orchid mechanism; --flags overrides at runtime.
+id: orchid-detectors
+detectors:
+  - detect: a1_abscission     # ethylene-auxin AZ guillotine (cgroup.kill)
+  - detect: a2_velamen        # isolated build spill + autolytic scavenger
+  - detect: a3_pseudobulb     # in-memory sqlite hydrenchyma + stomatal gating
+  - detect: a4_aquaporin      # wire-model-spoof witness + pcap/proc seals
+  - detect: a5_phloem         # HUD velocity/compaction + write-first lock
+  - detect: a6_meristem       # NUL-hole scrub + argos/xerj bin + tailscale health
+  - detect: a7_passage        # code-token typo filter + kinetic keystroke decode
+  - detect: a8_rhizome        # /dev/shm mmap ring + clonal symlink audit

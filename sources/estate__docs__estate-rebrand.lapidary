@@ -1,0 +1,50 @@
+# BRAND REBRAND — estate control plane, 2026-10-21
+#
+# Engine: azurite/skills/00_inbox/rename-roundup/rename.ts (bun)
+#   bun run rename.ts --repo /home/toxic/estate --pairs docs/estate-rebrand.pairs --dry-run
+#
+# ORDER MATTERS: the engine applies rules in file order, and every substr/word/
+# prefix rule auto-expands to UPPER and Capitalized variants. The multi-word and
+# underscore forms are consumed BEFORE the bare `word:` rule, otherwise the
+# hyphenated and underscored spellings would be mangled into the new brand
+# inconsistently or left half-renamed. The underscore env-var identifiers need
+# their own substr rules for the same reason: `\b` does not break on `_`.
+substr: sovereign-chat => estate-chat
+substr: SOVEREIGN_CHAT => ESTATE_CHAT
+substr: SOVEREIGN_ROOT => ESTATE_ROOT
+substr: sovereign-router => estate-router
+substr: SOVEREIGN_AGENTS => ESTATE_AGENTS
+substr: SOVEREIGN_PROFILE => ESTATE_PROFILE
+substr: SOVEREIGN_PROOF => ESTATE_PROOF
+word: sovereign => estate
+
+# --- exclusions: real-world tokens that must survive the rebrand -------------
+# The upstream repo still lives under the retired org/name (GitHub api 200);
+# the new spelling is 404, so renaming the remote would break it. Excluding
+# the bare name keeps every reference to it (url, badge, wire map) consistent.
+exclude: sovereign-projects
+# The retired home path does not exist; AGENTS.md cites it as retired, so
+# renaming the citation would make the doc lie.
+exclude: /home/toxic/sovereign/`
+# Legacy env-var spellings kept so old callers still resolve.
+exclude: ${SOVEREIGN_ROOT:-
+exclude: export SOVEREIGN_ROOT=
+# Stale .hashes keys for daemons renamed in an earlier pass. Renaming them
+# would hand `pf build` a wrong ancestor hash and trip its conflict guard.
+exclude: sovereign-exporter
+exclude: sovereign-stream-broker
+# Capitalised home-path spellings in archived .bak copies: the auto-expanded
+# Capitalized rule would produce the bogus `$HOME/Estate`; the old path is
+# the truthful value for a historical backup.
+exclude: $HOME/Sovereign
+exclude: ~/Sovereign
+# Self-protection: keep this rules file a fixed point of the engine. Without
+# these, re-running the tool would rewrite its own rules into a reverse rename.
+exclude: substr: sovereign-chat => estate-chat
+exclude: substr: SOVEREIGN_CHAT => ESTATE_CHAT
+exclude: substr: SOVEREIGN_ROOT => ESTATE_ROOT
+exclude: substr: sovereign-router => estate-router
+exclude: substr: SOVEREIGN_AGENTS => ESTATE_AGENTS
+exclude: substr: SOVEREIGN_PROFILE => ESTATE_PROFILE
+exclude: substr: SOVEREIGN_PROOF => ESTATE_PROOF
+exclude: word: sovereign => estate

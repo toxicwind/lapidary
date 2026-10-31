@@ -1,0 +1,2620 @@
+{
+ "sources": 42,
+ "rules": 427,
+ "excludes": [
+  "$HOME/Sovereign",
+  "${SOVEREIGN_ROOT:-",
+  "/home/toxic/sovereign/",
+  "AZURITE_API_KEY",
+  "BORNITE_PORT",
+  "BROWSER_KEEPER_CDP_PORT",
+  "BYTEVISION",
+  "CUTTINGGATE_API_KEY",
+  "FLOCK_API_KEY",
+  "FLOCK_ROUTER_PORT",
+  "HERD_KEY",
+  "HERD_POOL",
+  "HERD_PORT",
+  "KEEPER_CDP_PORT",
+  "KEEPER_DIR",
+  "NuvioMedia",
+  "NuvioTVSmart",
+  "NuvioTVWebOS",
+  "OMP_NUM_THREADS",
+  "OMP_THREAD_LIMIT",
+  "PINAX_API_KEY",
+  "RHODOCHROSITE_PORT",
+  "aether-rename.pairs",
+  "aether-to-slate.pairs",
+  "bornite-port",
+  "bytevision",
+  "cuttinggate-api-key",
+  "export SOVEREIGN_ROOT=",
+  "grasp-hub",
+  "herd-pool",
+  "herd-rename.pairs",
+  "herd-to-bornite.pairs",
+  "llama-swap-to-bornite.pairs",
+  "llama.cpp",
+  "pinax-api-key",
+  "rhodochrosite-port",
+  "sovereign-exporter",
+  "sovereign-projects",
+  "sovereign-stream-broker",
+  "substr: SOVEREIGN_AGENTS => ESTATE_AGENTS",
+  "substr: SOVEREIGN_CHAT => ESTATE_CHAT",
+  "substr: SOVEREIGN_PROFILE => ESTATE_PROFILE",
+  "substr: SOVEREIGN_PROOF => ESTATE_PROOF",
+  "substr: SOVEREIGN_ROOT => ESTATE_ROOT",
+  "substr: sovereign-chat => estate-chat",
+  "substr: sovereign-router => estate-router",
+  "vendored/",
+  "word: sovereign => estate",
+  "~/Sovereign"
+ ],
+ "conflicts": 32,
+ "map": [
+  {
+   "kind": "path",
+   "old": "git mv docs/connector-bridge-routing-d4734168.md",
+   "new": "/home/toxic/pens/estate/hatch/docs",
+   "source": "estate__REORG-MANIFEST.txt"
+  },
+  {
+   "kind": "path",
+   "old": "git mv docs/Meta/Muse AI/Jarvis/runtime-cell.md",
+   "new": "/home/toxic/pens/estate/hatch/docs",
+   "source": "estate__REORG-MANIFEST.txt"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/projects/range/ranch/gear",
+   "new": "/home/toxic/pens/estate/config/gear",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "git mv docs/ws-exec-8379-audit-20260914.md",
+   "new": "/home/toxic/pens/estate/hatch/docs",
+   "source": "estate__REORG-MANIFEST.txt"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/ranch/mesh/secretsmith",
+   "new": "${SKILLS_ROOT}/../kryptos/secretsmith",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "config/tau/agent/extensions/hashline-pi",
+   "new": "products/estate-orphans/tau-extensions",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "cp shingle-workspace/awrawr_ws_exec.py",
+   "new": "bridge/awrawr_ws_exec.py",
+   "source": "estate__REORG-MANIFEST.txt"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/ranch/super-ralph",
+   "new": "RETIRED",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "engines/bornite/llama-cpp-turboquant",
+   "new": "RETIRED (empty gitlink)",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "pens/ranch/forge/router/chalcopyrite",
+   "new": "pens/geode/products/chalcopyrite",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/ranch/mesh/proxy/chalcopyrite",
+   "new": "pens/geode/products/chalcopyrite",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "pens/ranch/forge/router/cuttinggate",
+   "new": "pens/geode/products/chalcopyrite",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "pens/olympus/products/rhodochrosite",
+   "new": "pens/geode/products/rhodochrosite",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/ranch/grasp-hub",
+   "new": "/home/toxic/pens/geode/products/azurite",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/ranch/gatehouse",
+   "new": "RETIRED",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/azurite/skills",
+   "new": "/home/toxic/pens/geode/products/azurite/skills",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/skills-hub-hub",
+   "new": "/home/toxic/pens/geode/products/azurite",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "mv shingle-workspace/bridge-docs",
+   "new": "hatch/docs/bridge-docs",
+   "source": "estate__REORG-MANIFEST.txt"
+  },
+  {
+   "kind": "substr",
+   "old": "pens/ranch/forge/router/bornite",
+   "new": "pens/geode/products/bornite",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "github.com/toxic/estate/skills/",
+   "new": "github.com/toxicwind/azurite/tree/main/skills/",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/ranch/roost",
+   "new": "RETIRED",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/ranch/flock",
+   "new": "RETIRED",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/ranch/shep",
+   "new": "RETIRED",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "BYTE_VISION_MCP_INTERNAL_PORT",
+   "new": "FEEDLOT_MCP_INTERNAL_PORT",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "stack/services/byte-vision.sh",
+   "new": "stack/services/feedlot.sh",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/skills-hub",
+   "new": "/home/toxic/pens/geode/products/azurite/skills",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/grasp-hub",
+   "new": "/home/toxic/pens/geode/products/azurite",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "engines/bornite/beellama.cpp",
+   "new": "RETIRED (empty gitlink)",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "engines/bornite/ik_llama.cpp",
+   "new": "RETIRED (empty gitlink)",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Read this table as: old path",
+   "new": "where that checkout lives now.",
+   "source": "ranch__PEERS.md"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/estate-projects",
+   "new": "/home/toxic/pens/estate/products",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "github.com/can1357/oh-my-pi",
+   "new": "github.com/toxicwind/tau",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "example-byte-vision-cfg.env",
+   "new": "example-feedlot-cfg.env",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/olympus",
+   "new": "/home/toxic/pens/olympus",
+   "source": "estate__config__estate-ghost-path.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "github.com/mostlygeek/herd",
+   "new": "github.com/toxicwind/bornite",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/skills/",
+   "new": "${SKILLS_ROOT}/",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/skills/fast-browser",
+   "new": "${SKILLS_ROOT}/fast-browser",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/skills",
+   "new": "/home/toxic/pens/geode/products/azurite/skills",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "submodules/phone-sentinel",
+   "new": "RETIRED (empty gitlink)",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "mv /home/toxic/.fleet-bus",
+   "new": "/home/toxic/pens/estate/hatch/agents/ember",
+   "source": "estate__REORG-MANIFEST.txt"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/config",
+   "new": "/home/toxic/pens/estate/config",
+   "source": "estate__config__estate-ghost-path.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate/ranch",
+   "new": "/home/toxic/pens/ranch",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/ranch",
+   "new": "/home/toxic/pens/ranch",
+   "source": "estate__config__estate-ghost-path.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "pens/ranch/rhodochrosite",
+   "new": "pens/geode/products/rhodochrosite",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate/barn",
+   "new": "/home/toxic/pens/barn",
+   "source": "estate__config__estate-ghost-path.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "@toxicwind/cuttinggate",
+   "new": "@toxicwind/chalcopyrite",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "mv shingle-workspace",
+   "new": "scratch",
+   "source": "estate__REORG-MANIFEST.txt"
+  },
+  {
+   "kind": "word",
+   "old": "byte-vision-mcp-priv",
+   "new": "feedlot-mcp",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "byte_vision_mcp_priv",
+   "new": "feedlot_mcp",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "byte-vision-mcp-priv",
+   "new": "feedlot-mcp",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "pens/geode/grasp-hub",
+   "new": "pens/geode/products/azurite",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "cuttinggate-serve.sh",
+   "new": "chalcopyrite-serve.sh",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "com.toxicwind.aether",
+   "new": "com.toxicwind.slate",
+   "source": "nuvio__nuvio-webos__aether-rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "work/tau-extensions",
+   "new": "products/estate-orphans/tau-extensions",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "byte-vision-cfg.env",
+   "new": "feedlot-cfg.env",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": ".config/byte-vision",
+   "new": ".config/feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".config/byte-vision",
+   "new": ".config/feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "~/estate/skills-hub",
+   "new": "/home/toxic/pens/geode/products/azurite/skills",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "/home/toxic/pens/estate",
+   "new": "/home/toxic/pens/estate",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/home/toxic/pens/estate",
+   "new": "/home/toxic/pens/estate",
+   "source": "estate__config__estate-ghost-path.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "/home/toxic/pens/estate",
+   "new": "/home/toxic/pens/estate",
+   "source": "estate__config__estate-ghost-path.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "estate/byte-vision",
+   "new": "estate/feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "router/cuttinggate",
+   "new": "router/chalcopyrite",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "@estate/skills-hub",
+   "new": "@estate/azurite",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "io.strem.tv.server",
+   "new": "com.toxicwind.slate.server",
+   "source": "nuvio__nuvio-webos__aether-rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "borrowed/delendai",
+   "new": "pens/ranch/range/apps/delendai-control-plane",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "SOVEREIGN_PROFILE",
+   "new": "ESTATE_PROFILE",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "daemons.iostremtv",
+   "new": "daemons.slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "daemons.streamers",
+   "new": "daemons.slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "llama.swap/config",
+   "new": "bornite/config   # llama.swap config dir form",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bin/skills-hub.js",
+   "new": "bin/azurite.js",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate-skills-hub",
+   "new": "azurite",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "devices/lg-webos",
+   "new": "products/estate-orphans/devices/lg-webos",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "sovereign-router",
+   "new": "estate-router",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "SOVEREIGN_AGENTS",
+   "new": "ESTATE_AGENTS",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "BYTE_VISION_PORT",
+   "new": "FEEDLOT_PORT",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/iostremtv",
+   "new": "estate/slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/streamers",
+   "new": "estate/slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/grasp-hub",
+   "new": "estate/azurite",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "CUTTINGGATE_PORT",
+   "new": "CHALCOPYRITE_PORT",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "@toxicwind/pinax",
+   "new": "@toxicwind/mimetite",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "@toxicwind/hodos",
+   "new": "@toxicwind/rhodochrosite",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "~/estate/skills/",
+   "new": "${SKILLS_ROOT}/",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "barn/nativelink",
+   "new": "pens/estate/config/nativelink",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "mcp/mcpproxy-go",
+   "new": "pens/barn/products/thresher",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "ranch/grasp-hub",
+   "new": "geode/products/azurite",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "billion-context",
+   "new": "sigma",
+   "source": "estate__docs__archive__renames__sigma-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "billion_context",
+   "new": "sigma",
+   "source": "estate__docs__archive__renames__sigma-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BILLION_CONTEXT",
+   "new": "SIGMA",
+   "source": "estate__docs__archive__renames__sigma-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "SOVEREIGN_PROOF",
+   "new": "ESTATE_PROOF",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "byte-vision-mcp",
+   "new": "feedlot-mcp",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "byte-vision-mcp",
+   "new": "feedlot-mcp",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "daemons.bornite",
+   "new": "daemons.agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "barn/flatbread",
+   "new": "pens/ranch/barn/flatbread",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "barn/weave-sub",
+   "new": "pens/ranch/barn/weave-sub",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "packages/theta",
+   "new": "RETIRED (empty gitlink)",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BillionContext",
+   "new": "Sigma",
+   "source": "estate__docs__archive__renames__sigma-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "sovereign-chat",
+   "new": "estate-chat",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "SOVEREIGN_CHAT",
+   "new": "ESTATE_CHAT",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "SOVEREIGN_ROOT",
+   "new": "ESTATE_ROOT",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "byte-vision.sh",
+   "new": "feedlot.sh",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK_DATA_DIR",
+   "new": "HODOS_DATA_DIR",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "daemons.aether",
+   "new": "daemons.slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/bornite",
+   "new": "estate/agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "debate-oracle_",
+   "new": "duel_",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "debate_oracle_",
+   "new": "duel_",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/skills/",
+   "new": "${SKILLS_ROOT}/",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "work/airspeak",
+   "new": "RETIRED (empty gitlink)",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/byte-vision/",
+   "new": "/feedlot/",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "daemons.flock",
+   "new": "daemons.hodos",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/aether",
+   "new": "estate/slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "debate-oracle",
+   "new": "duel",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "debate_oracle",
+   "new": "duel",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/cuttinggate/",
+   "new": "/chalcopyrite/",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "@estate/pinax",
+   "new": "@estate/mimetite",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "daemons.herd",
+   "new": "daemons.bornite",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "daemons.HERD",
+   "new": "daemons.BORNITE",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "yote-message",
+   "new": "yote-relay",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "yote_message",
+   "new": "yote_relay",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/flock",
+   "new": "estate/hodos",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "DebateOracle",
+   "new": "Duel",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "engines/herd",
+   "new": "engines/bornite",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "CUTTINGGATE_",
+   "new": "CHALCOPYRITE_",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "cuttinggate_",
+   "new": "chalcopyrite_",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "CuttingGate_",
+   "new": "Chalcopyrite_",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "estate/pinax",
+   "new": "estate/mimetite",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "keeper-first",
+   "new": "dp3-first",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "barn/corral",
+   "new": "pens/ranch/corral",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "nuvio-webos",
+   "new": "aether-webos",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "nuvio_webos",
+   "new": "aether_webos",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "nuvio/webos",
+   "new": "aether/webos",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "COYOTE_PORT",
+   "new": "YOTE_CORE_PORT",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "coyote-loop",
+   "new": "yote-core",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "coyote_loop",
+   "new": "yote_core",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "prefix: omp",
+   "new": "tau",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "prefix: pi-",
+   "new": "tau-",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "byte-vision",
+   "new": "feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "byte_vision",
+   "new": "feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "BYTE_VISION",
+   "new": "FEEDLOT",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "BYTE-VISION",
+   "new": "FEEDLOT",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "byte-vision",
+   "new": "feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Byte Vision",
+   "new": "Feedlot",
+   "source": "estate__docs__feedlot-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "byte vision",
+   "new": "feedlot",
+   "source": "estate__docs__feedlot-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock_state",
+   "new": "hodos_state",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "code_racer_",
+   "new": "furlong_",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bid-market_",
+   "new": "gavel_",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bid_market_",
+   "new": "gavel_",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/grasp-hub/",
+   "new": "/azurite/",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "cuttinggate",
+   "new": "chalcopyrite",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "CuttingGate",
+   "new": "Chalcopyrite",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "CUTTINGGATE",
+   "new": "CHALCOPYRITE",
+   "source": "geode__docs__chalcopyrite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "flock-proxy",
+   "new": "rhodochrosite",
+   "source": "geode__products__azurite__rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "io.strem.tv",
+   "new": "com.toxicwind.slate",
+   "source": "nuvio__nuvio-webos__aether-rename.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "barn/rosec",
+   "new": "pens/ranch/barn/rosec",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "path",
+   "old": "barn/weave",
+   "new": "pens/barn/weave",
+   "source": "canonical-cutover-20261028.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "llama-swap",
+   "new": "bornite",
+   "source": "estate__config__llama-swap-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "llama_swap",
+   "new": "bornite",
+   "source": "estate__config__llama-swap-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "LLAMA_SWAP",
+   "new": "BORNITE",
+   "source": "estate__config__llama-swap-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "llama swap",
+   "new": "bornite",
+   "source": "estate__config__llama-swap-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Llama Swap",
+   "new": "Bornite",
+   "source": "estate__config__llama-swap-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "NuvioWebOS",
+   "new": "AetherWebOS",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "ByteVision",
+   "new": "Feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "bytevision",
+   "new": "feedlot",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "BYTEVISION",
+   "new": "FEEDLOT",
+   "source": "estate__docs__feedlot-rename-full.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK_HOST",
+   "new": "HODOS_HOST",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK_PORT",
+   "new": "HODOS_PORT",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK_ICON",
+   "new": "HODOS_ICON",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock-data",
+   "new": "hodos-data",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock-ssot",
+   "new": "hodos-ssot",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "iostremtv_",
+   "new": "slate_",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "IOSTREMTV_",
+   "new": "SLATE_",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Iostremtv_",
+   "new": "Slate_",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_iostremtv",
+   "new": "_slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_IOSTREMTV",
+   "new": "_SLATE",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "iostremtv-",
+   "new": "slate-",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "IOSTREMTV-",
+   "new": "SLATE-",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Iostremtv-",
+   "new": "Slate-",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-iostremtv",
+   "new": "-slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-IOSTREMTV",
+   "new": "-SLATE",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "iostremtv/",
+   "new": "slate/",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "IOSTREMTV/",
+   "new": "SLATE/",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Iostremtv/",
+   "new": "Slate/",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/iostremtv",
+   "new": "/slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/IOSTREMTV",
+   "new": "/SLATE",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "iostremtv.",
+   "new": "slate.",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "IOSTREMTV.",
+   "new": "SLATE.",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Iostremtv.",
+   "new": "Slate.",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".iostremtv",
+   "new": ".slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".IOSTREMTV",
+   "new": ".SLATE",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "streamers_",
+   "new": "slate_",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "STREAMERS_",
+   "new": "SLATE_",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Streamers_",
+   "new": "Slate_",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_streamers",
+   "new": "_slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_STREAMERS",
+   "new": "_SLATE",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "streamers-",
+   "new": "slate-",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "STREAMERS-",
+   "new": "SLATE-",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Streamers-",
+   "new": "Slate-",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-streamers",
+   "new": "-slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-STREAMERS",
+   "new": "-SLATE",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "streamers/",
+   "new": "slate/",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "STREAMERS/",
+   "new": "SLATE/",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Streamers/",
+   "new": "Slate/",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/streamers",
+   "new": "/slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/STREAMERS",
+   "new": "/SLATE",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "streamers.",
+   "new": "slate.",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "STREAMERS.",
+   "new": "SLATE.",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Streamers.",
+   "new": "Slate.",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".streamers",
+   "new": ".slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".STREAMERS",
+   "new": ".SLATE",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "code-racer",
+   "new": "furlong",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "code_racer",
+   "new": "furlong",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bid-market",
+   "new": "gavel",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bid_market",
+   "new": "gavel",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "GRASP_HUB_",
+   "new": "AZURITE_",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "grasp_hub_",
+   "new": "azurite_",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "grasp-hub_",
+   "new": "azurite_",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "grasp-hub/",
+   "new": "azurite/",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "llama_swap",
+   "new": "bornite",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "LLAMA_SWAP",
+   "new": "BORNITE",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "pins/pinax",
+   "new": "pins/mimetite",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "hodos.data",
+   "new": "rhodochrosite.data",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HODOS_DATA",
+   "new": "RHODOCHROSITE_DATA",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "VansRouter",
+   "new": "Rhodochrosite",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "VANSROUTER",
+   "new": "RHODOCHROSITE",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "vansrouter",
+   "new": "rhodochrosite",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "proxy.vans",
+   "new": "proxy",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "proxy.omni",
+   "new": "proxy",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "omniroute.",
+   "new": "proxy.",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "delendai-",
+   "new": "hephaistos-",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-delendai",
+   "new": "-hephaistos",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "delendai_",
+   "new": "hephaistos_",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_delendai",
+   "new": "_hephaistos",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "delendai.",
+   "new": "hephaistos.",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".delendai",
+   "new": ".hephaistos",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "delendai/",
+   "new": "hephaistos/",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/delendai",
+   "new": "/hephaistos",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "DELENDAI_",
+   "new": "HEPHAISTOS_",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "DELENDAI-",
+   "new": "HEPHAISTOS-",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "smithers-",
+   "new": "hestia-",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-smithers",
+   "new": "-hestia",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "smithers_",
+   "new": "hestia_",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_smithers",
+   "new": "_hestia",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "smithers.",
+   "new": "hestia.",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".smithers",
+   "new": ".hestia",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "smithers/",
+   "new": "hestia/",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/smithers",
+   "new": "/hestia",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "SMITHERS_",
+   "new": "HESTIA_",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "SMITHERS-",
+   "new": "HESTIA-",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HERD_PORT",
+   "new": "BORNITE_PORT",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "herd_port",
+   "new": "bornite_port",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "LlamaSwap",
+   "new": "Bornite",
+   "source": "estate__config__llama-swap-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "nuvio-web",
+   "new": "aether-web",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "YOTE_PORT",
+   "new": "YOTE_RELAY_PORT",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "llamaswap",
+   "new": "herd",
+   "source": "estate__docs__archive__renames__herd-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "@oh-my-pi",
+   "new": "@tau",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "sovereign",
+   "new": "estate",
+   "source": "estate__docs__estate-rebrand.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock.env",
+   "new": "hodos.env",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock-run",
+   "new": "hodos-run",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flocksync",
+   "new": "hodossync",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCKSYNC",
+   "new": "HODOSSYNC",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "iostremtv",
+   "new": "slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Iostremtv",
+   "new": "Slate",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "IOSTREMTV",
+   "new": "SLATE",
+   "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "streamers",
+   "new": "slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Streamers",
+   "new": "Slate",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "STREAMERS",
+   "new": "SLATE",
+   "source": "estate__docs__name-fix-streamers-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "CodeRacer",
+   "new": "Furlong",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BidMarket",
+   "new": "Gavel",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__themed-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "grasp-hub",
+   "new": "azurite",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "grasp_hub",
+   "new": "azurite_hub",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "GRASP_HUB",
+   "new": "AZURITE_HUB",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "llamaswap",
+   "new": "bornite",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "LLAMASWAP",
+   "new": "BORNITE",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "LlamaSwap",
+   "new": "Bornite",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "hodos.env",
+   "new": "rhodochrosite.env",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "hodos-key",
+   "new": "rhodochrosite-key",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HODOS_KEY",
+   "new": "RHODOCHROSITE_KEY",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "OmniRoute",
+   "new": "Rhodochrosite",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "OMNIROUTE",
+   "new": "RHODOCHROSITE",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "omniroute",
+   "new": "rhodochrosite",
+   "source": "geode__products__rhodochrosite__kb__rhodochrosite-merge.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "grasp-hub",
+   "new": "azurite",
+   "source": "ranch__products__rename-roundup__grasp-to-azurite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "delendai",
+   "new": "hephaistos",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Delendai",
+   "new": "Hephaistos",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "DELENDAI",
+   "new": "HEPHAISTOS",
+   "source": "ergasterion__docs__hephaistos-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "smithers",
+   "new": "hestia",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Smithers",
+   "new": "Hestia",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "SMITHERS",
+   "new": "HESTIA",
+   "source": "ergasterion__docs__hestia-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "NuvioWeb",
+   "new": "AetherWeb",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Nuvio TV",
+   "new": "AETHER TV",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "nuvio tv",
+   "new": "AETHER tv",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "oh-my-pi",
+   "new": "tau",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bornite_",
+   "new": "agele_",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BORNITE_",
+   "new": "AGELE_",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Bornite_",
+   "new": "Agele_",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bornite-",
+   "new": "agele-",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BORNITE-",
+   "new": "AGELE-",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Bornite-",
+   "new": "Agele-",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-bornite",
+   "new": "-agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-BORNITE",
+   "new": "-AGELE",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bornite/",
+   "new": "agele/",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BORNITE/",
+   "new": "AGELE/",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Bornite/",
+   "new": "Agele/",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/bornite",
+   "new": "/agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/BORNITE",
+   "new": "/AGELE",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "bornite.",
+   "new": "agele.",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BORNITE.",
+   "new": "AGELE.",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Bornite.",
+   "new": "Agele.",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".bornite",
+   "new": ".agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".BORNITE",
+   "new": ".AGELE",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "GraspHub",
+   "new": "Azurite",
+   "source": "geode__docs__azurite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "corral-",
+   "new": "ergane-",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-corral",
+   "new": "-ergane",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "corral_",
+   "new": "ergane_",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_corral",
+   "new": "_ergane",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "corral.",
+   "new": "ergane.",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".corral",
+   "new": ".ergane",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "corral/",
+   "new": "ergane/",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/corral",
+   "new": "/ergane",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "CORRAL_",
+   "new": "ERGANE_",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "CORRAL-",
+   "new": "ERGANE-",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "NuvioTV",
+   "new": "AETHER",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "nuviotv",
+   "new": "aether",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "mnemopi",
+   "new": "mnemotau",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".flock/",
+   "new": ".hodos/",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "aether_",
+   "new": "slate_",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "AETHER_",
+   "new": "SLATE_",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Aether_",
+   "new": "Slate_",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_aether",
+   "new": "_slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_AETHER",
+   "new": "_SLATE",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "aether-",
+   "new": "slate-",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "AETHER-",
+   "new": "SLATE-",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Aether-",
+   "new": "Slate-",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-aether",
+   "new": "-slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-AETHER",
+   "new": "-SLATE",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "aether/",
+   "new": "slate/",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "AETHER/",
+   "new": "SLATE/",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Aether/",
+   "new": "Slate/",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/aether",
+   "new": "/slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/AETHER",
+   "new": "/SLATE",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "aether.",
+   "new": "slate.",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "AETHER.",
+   "new": "SLATE.",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Aether.",
+   "new": "Slate.",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".aether",
+   "new": ".slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".AETHER",
+   "new": ".SLATE",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "bornite",
+   "new": "agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Bornite",
+   "new": "Agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "BORNITE",
+   "new": "AGELE",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "furlong",
+   "new": "agon",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Furlong",
+   "new": "Agon",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FURLONG",
+   "new": "AGON",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/pinax/",
+   "new": "/mimetite/",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "corral",
+   "new": "ergane",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Corral",
+   "new": "Ergane",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "CORRAL",
+   "new": "ERGANE",
+   "source": "ergasterion__docs__ergane-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "coyote",
+   "new": "yote-core",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Coyote",
+   "new": "YoteCore",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "COYOTE",
+   "new": "YOTE_CORE",
+   "source": "estate__config__yote-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "OhMyPi",
+   "new": "Tau",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "robomp",
+   "new": "robtau",
+   "source": "estate__docs__archive__renames__tau-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK_",
+   "new": "HODOS_",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock_",
+   "new": "hodos_",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".flock",
+   "new": ".hodos",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/flock",
+   "new": "/hodos",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "aether",
+   "new": "slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Aether",
+   "new": "Slate",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "AETHER",
+   "new": "SLATE",
+   "source": "estate__docs__name-fix-aether-to-slate.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Flock_",
+   "new": "Rhodochrosite_",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_flock",
+   "new": "_hodos",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_FLOCK",
+   "new": "_HODOS",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock-",
+   "new": "rhodochrosite-",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK-",
+   "new": "RHODOCHROSITE-",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Flock-",
+   "new": "Rhodochrosite-",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-flock",
+   "new": "-rhodochrosite",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-FLOCK",
+   "new": "-RHODOCHROSITE",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock/",
+   "new": "rhodochrosite/",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK/",
+   "new": "RHODOCHROSITE/",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Flock/",
+   "new": "Rhodochrosite/",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/FLOCK",
+   "new": "/RHODOCHROSITE",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "flock.",
+   "new": "rhodochrosite.",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "FLOCK.",
+   "new": "RHODOCHROSITE.",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Flock.",
+   "new": "Rhodochrosite.",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".FLOCK",
+   "new": ".RHODOCHROSITE",
+   "source": "estate__docs__name-fix-flock-to-rhodochrosite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "PINAX_",
+   "new": "MIMETITE_",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "pinax_",
+   "new": "mimetite_",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Pinax_",
+   "new": "Mimetite_",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "hodos-",
+   "new": "rhodochrosite-",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "hodos_",
+   "new": "rhodochrosite_",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".hodos",
+   "new": ".rhodochrosite",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/hodos",
+   "new": "/rhodochrosite",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HODOS_",
+   "new": "RHODOCHROSITE_",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HODOS-",
+   "new": "RHODOCHROSITE-",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "AETHER",
+   "new": "SLATE",
+   "source": "nuvio__nuvio-webos__aether-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HERD_",
+   "new": "BORNITE_",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "herd_",
+   "new": "bornite_",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Herd_",
+   "new": "Bornite_",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-herd",
+   "new": "-bornite",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "-HERD",
+   "new": "-BORNITE",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/herd",
+   "new": "/bornite",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "/HERD",
+   "new": "/BORNITE",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "NUVIO",
+   "new": "AETHER",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Nuvio",
+   "new": "AETHER",
+   "source": "estate__config__nuvio-aether.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "flock",
+   "new": "hodos",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Flock",
+   "new": "Hodos",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "FLOCK",
+   "new": "HODOS",
+   "source": "estate__docs__hodos-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_herd",
+   "new": "_agele",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "_HERD",
+   "new": "_AGELE",
+   "source": "estate__docs__name-fix-bornite-to-agele.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "herd-",
+   "new": "agele-",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": ".herd",
+   "new": ".agele",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HERD-",
+   "new": "BORNITE-",
+   "source": "geode__docs__bornite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "pinax",
+   "new": "mimetite",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Pinax",
+   "new": "Mimetite",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "PINAX",
+   "new": "MIMETITE",
+   "source": "geode__docs__mimetite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "hodos",
+   "new": "rhodochrosite",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Hodos",
+   "new": "Rhodochrosite",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "HODOS",
+   "new": "RHODOCHROSITE",
+   "source": "geode__docs__rhodochrosite-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "herd",
+   "new": "bornite",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "Herd",
+   "new": "Bornite",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "HERD",
+   "new": "BORNITE",
+   "source": "estate__config__herd-to-bornite.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "herd",
+   "new": "herd",
+   "source": "estate__docs__archive__renames__herd-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Herd",
+   "new": "Herd",
+   "source": "estate__docs__archive__renames__herd-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "HERD",
+   "new": "HERD",
+   "source": "estate__docs__archive__renames__herd-rename.pairs"
+  },
+  {
+   "kind": "word",
+   "old": "bili",
+   "new": "sigma",
+   "source": "estate__docs__archive__renames__sigma-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Bili",
+   "new": "Sigma",
+   "source": "estate__docs__archive__renames__sigma-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "BILI",
+   "new": "SIGMA",
+   "source": "estate__docs__archive__renames__sigma-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "duel",
+   "new": "antilogos",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "Duel",
+   "new": "Antilogos",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  },
+  {
+   "kind": "substr",
+   "old": "DUEL",
+   "new": "ANTILOGOS",
+   "source": "estate__products__estate-skills-hub__skills__00_inbox__rename-roundup__greek-rename.pairs"
+  }
+ ]
+}

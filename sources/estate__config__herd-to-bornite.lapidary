@@ -1,0 +1,29 @@
+# Herd -> bornite rename pairs (canonical product: bornite; HERD_* is legacy)
+# Case-preserving rename-roundup pairs, same convention as llama-swap-to-bornite.pairs.
+# Covers herd tokens that survived the identity-stub herd-rename.pairs.
+
+# snake / env forms
+substr: HERD_PORT => BORNITE_PORT
+substr: HERD_ => BORNITE_
+substr: herd_port => bornite_port
+substr: herd_ => bornite_
+substr: Herd_ => Bornite_
+
+# bare tokens (word boundary, case variants)
+word: herd => bornite
+word: Herd => Bornite
+word: HERD => BORNITE
+
+# separator compounds
+substr: -herd => -bornite
+substr: -HERD => -BORNITE
+substr: /herd => /bornite
+substr: /HERD => /BORNITE
+
+# daemon id forms
+substr: daemons.herd => daemons.bornite
+substr: daemons.HERD => daemons.BORNITE
+
+# Exclude the pairs mapping files themselves from renames/rewrites.
+exclude: herd-to-bornite.pairs
+exclude: herd-rename.pairs

@@ -1,0 +1,18 @@
+# Greek ranch rename pairs: fur/ling/duel -> agon/antilogos
+substr:  furlong => agon
+substr:  Furlong => Agon
+substr:  FURLONG => AGON
+
+# antilogos: the debate-oracle / duel component
+substr:  duel => antilogos
+substr:  Duel => Antilogos
+substr:  DUEL => ANTILOGOS
+
+# agele (ἀγέλη): the local inference herd / llama-swap router
+word:    herd => agele
+word:    Herd => Agele
+word:    HERD => AGELE
+substr:  herd_ => agele_
+substr:  herd- => agele-
+substr:  /herd => /agele
+substr:  .herd => .agele

@@ -1,0 +1,16 @@
+{
+  "$comment": "Feature-flag manifest. Dynamic at runtime: flags.json is the defaults layer; ORCHID_FLAGS env overrides per flag (all|none|a1,a5|a4=off), ORCHID_CORPUS_DIR overrides the log corpus root. ORCHID_AGENTIC=model enables model-assisted open selection in `doctor`.",
+  "defaults": {
+    "a1_abscission": { "enabled": true, "params": { "ethyleneThresholdMs": 1800, "maxChildMs": 5000 } },
+    "a2_velamen": { "enabled": true, "params": { "budgetMb": 64, "staleMs": 1200 } },
+    "a3_pseudobulb": { "enabled": true, "params": { "flushEvery": 16 } },
+    "a4_aquaporin": { "enabled": true, "params": { "spoofPct": 0.01, "applySeals": false } },
+    "a5_phloem": { "enabled": true, "params": { "velocityFloor": 35, "compactionDelta": 100000 } },
+    "a6_meristem": { "enabled": true, "params": { "minPokes": 8, "applySpawn": false, "applyTailscaleUp": false } },
+    "a7_passage": { "enabled": true, "params": { "haltWriteFirst": true } },
+    "a8_rhizome": { "enabled": true, "params": { "shmBytes": 16777216 } }
+  },
+  "meta": {
+    "agentic": { "modelRoute": "default", "openSelection": true, "maxModelMs": 8000 }
+  }
+}

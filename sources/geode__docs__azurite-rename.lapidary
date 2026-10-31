@@ -1,0 +1,25 @@
+# azurite rename pairs — grasp-hub -> azurite (GraSP skills engine rebrand)
+#
+# WHY: geode pen member table: azurite (Cu3(CO3)2(OH)2, the deep azure of the
+# blueprint from which a capability is built) = the GraSP skills engine,
+# formerly grasp-hub. Cu3 = the 3-way skill graph (skills/DAG/MCP).
+
+# --- the bare name ----------------------------------------------------------
+word: grasp-hub => azurite
+word: grasp_hub => azurite_hub
+word: GraspHub => Azurite
+word: GRASP_HUB => AZURITE_HUB
+
+# --- env-var / identifier prefix forms --------------------------------------
+substr: GRASP_HUB_ => AZURITE_
+substr: grasp_hub_ => azurite_
+substr: grasp-hub_ => azurite_
+
+# --- paths ------------------------------------------------------------------
+substr: pens/geode/grasp-hub => pens/geode/products/azurite
+substr: estate/grasp-hub => estate/azurite
+substr: /grasp-hub/ => /azurite/
+substr: grasp-hub/ => azurite/
+
+# --- do NOT touch ------------------------------------------------------------
+exclude: AZURITE_API_KEY

@@ -1,0 +1,4 @@
+word: grasp-hub => azurite
+word: grasp_hub => azurite
+substr: grasp-hub => azurite
+exclude: grasp-hub

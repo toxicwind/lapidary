@@ -1,0 +1,60 @@
+# bornite rename pairs — herd -> bornite (local engine rebrand)
+#
+# Word: OLD => NEW (whole word \bOLD\b, case-sensitive)
+# substr: OLD => NEW (substring)
+#
+# Every substr/word rule auto-expands to UPPER and Capitalized variants.
+# Rules apply in file order. Exclusions are placeholder-armored first.
+
+# ---- code identifiers -------------------------------------------------------
+word: herd => bornite
+word: Herd => Bornite
+word: HERD => BORNITE
+
+# compound / path forms (substring — \b does not split on _ or -)
+substr: herd- => bornite-
+substr: herd_ => bornite_
+substr: .herd => .bornite
+substr: /herd => /bornite
+substr: HERD_ => BORNITE_
+substr: HERD- => BORNITE-
+
+# package / module names
+substr: github.com/mostlygeek/herd => github.com/toxicwind/bornite
+
+# ---- do NOT touch: these are OTHER things -----------------------------------
+exclude: BORNITE_PORT
+exclude: bornite-port
+exclude: HERD_POOL
+exclude: herd-pool
+
+# --- geode home redirects (2026-10-26 cutover) ------------------------------
+substr: pens/ranch/forge/router/bornite => pens/geode/products/bornite
+substr: engines/herd => engines/bornite
+
+# --- llama-swap service rename (2026-10-27, architect) ----------------------
+# The fork running on :25100 IS bornite (process name, Containerfile, catalog
+# def). The upstream service name leaked through the rebrand unscathed and
+# keeps colliding with the renamed product (router LOCAL_ROLES, pickWeighted
+# bonus lane, resolveModel special case, entitlement fixtures).
+#
+# Author variants (2026-10-27): EVERY form the upstream author uses renames.
+# After the sweep the ONLY remaining upstream identity must be:
+#   1. a credit line ("fork of llama-swap" / LICENSE attribution),
+#   2. the original upstream docs (vendored README/docs),
+#   3. bornite/vendored/ (latest upstream nightly snapshot).
+word: llama-swap => bornite
+word: llamaswap => bornite
+word: llama_swap => bornite
+word: LlamaSwap => Bornite
+word: LLAMASWAP => BORNITE
+substr: llama_swap => bornite
+substr: LLAMA_SWAP => BORNITE
+substr: LlamaSwap => Bornite
+substr: llama.swap/config => bornite/config   # llama.swap config dir form
+# Exclusions (armored first): ONLY the three sanctioned upstream-identity
+# surfaces survive the sweep — credit lines are restored deliberately after
+# (they are content, not a name class), the upstream snapshot lives under
+# vendored/ untouched, and llama.cpp is a DIFFERENT project entirely.
+exclude: vendored/
+exclude: llama.cpp

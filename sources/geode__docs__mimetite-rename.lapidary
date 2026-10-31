@@ -1,0 +1,32 @@
+# mimetite rename pairs — pinax -> mimetite (provider-catalog SSOT rebrand)
+#
+# Word: OLD => NEW (whole word \bOLD\b, case-sensitive)
+# Substr: OLD => NEW (substring)
+#
+# WHY: the provider catalog is renamed from `pinax` (@toxicwind/pinax) to
+# `mimetite` as part of the geode pen consolidation. The mineral theme names
+# every member; the catalog's job is to record what providers *imitate*, and
+# "mimetite" comes from Greek mimetes, "imitator".
+
+# --- package identity (scope + package name) -------------------------------
+substr: @toxicwind/pinax => @toxicwind/mimetite
+substr: @estate/pinax => @estate/mimetite
+
+# --- the bare name as a word -----------------------------------------------
+word: pinax => mimetite
+word: Pinax => Mimetite
+word: PINAX => MIMETITE
+
+# --- env-var / identifier prefix forms (INCLUDES_ are word-char joined) ---
+substr: PINAX_ => MIMETITE_
+substr: pinax_ => mimetite_
+substr: Pinax_ => Mimetite_
+
+# --- paths ------------------------------------------------------------------
+substr: /pinax/ => /mimetite/
+substr: pins/pinax => pins/mimetite
+substr: estate/pinax => estate/mimetite
+
+# --- do NOT touch these: they are real identifiers of OTHER things ---------
+exclude: PINAX_API_KEY
+exclude: pinax-api-key

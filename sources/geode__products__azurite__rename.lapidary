@@ -1,0 +1,30 @@
+# azurite rename-roundup pairs — flush the dead estate/ skill-hub paths.
+# azurite's portability contract: no hardcoded /home/toxic/estate paths; skills
+# resolve via $SKILLS_ROOT / relative tree walk. These refs predate the
+# geode cutover (estate/skills is GONE since 2026-10-20).
+substr: /home/toxic/estate/skills/ => ${SKILLS_ROOT}/
+substr: ~/estate/skills/ => ${SKILLS_ROOT}/
+substr: estate/skills/fast-browser => ${SKILLS_ROOT}/fast-browser
+# bare command paths inside SKILL.md invocations (repo-audit etc.)
+substr: estate/skills/ => ${SKILLS_ROOT}/
+# pre-reorg GitHub layout: skills were separate repos under estate/skills/;
+# they are azurite skills now
+substr: github.com/toxic/estate/skills/ => github.com/toxicwind/azurite/tree/main/skills/
+# the OLD hub path (pre-geode cutover; first rename pass left skills-hub-hub)
+substr: /home/toxic/estate/skills-hub-hub => /home/toxic/pens/geode/products/azurite
+substr: /home/toxic/estate/skills-hub => /home/toxic/pens/geode/products/azurite/skills
+substr: ~/estate/skills-hub => /home/toxic/pens/geode/products/azurite/skills
+# npm scope/package name + bin display text
+substr: @estate/skills-hub => @estate/azurite
+substr: bin/skills-hub.js => bin/azurite.js
+substr: /home/toxic/estate/ranch/mesh/secretsmith => ${SKILLS_ROOT}/../kryptos/secretsmith
+# old hub name -> azurite (docs/bin tooling only; do not touch package names that are still live)
+substr: estate-skills-hub => azurite
+word: grasp-hub => azurite
+# keeper -> DP3 framing (skopos persistent pane), safe word-mode
+word: keeper-first => dp3-first
+# retired gateway name -> rhodochrosite
+word: flock-proxy => rhodochrosite
+exclude: KEEPER_DIR
+exclude: KEEPER_CDP_PORT
+exclude: BROWSER_KEEPER_CDP_PORT

@@ -1,0 +1,23 @@
+# agone/furlong/gavel/duel — fun-themed ranch rename pairs
+# code-racer -> furlong, bid-market -> gavel, debate-oracle -> duel
+# substr rules (distinctive tokens = safe substring)
+
+# code-racer -> furlong
+substr:  code-racer => furlong
+substr:  code_racer => furlong
+substr:  CodeRacer => Furlong
+substr:  code_racer_ => furlong_
+
+# bid-market -> gavel
+substr:  bid-market => gavel
+substr:  bid_market => gavel
+substr:  BidMarket => Gavel
+substr:  bid-market_ => gavel_
+substr:  bid_market_ => gavel_
+
+# debate-oracle -> duel
+substr:  debate-oracle => duel
+substr:  debate_oracle => duel
+substr:  DebateOracle => Duel
+substr:  debate-oracle_ => duel_
+substr:  debate_oracle_ => duel_

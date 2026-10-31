@@ -1,0 +1,34 @@
+# hodos rename pairs - flock -> hodos full rebrand
+# word: OLD => NEW (whole word \bOLD\b, case-sensitive)
+# substr: OLD => NEW (substring)
+
+# Code identifiers (case variants)
+word: flock => hodos
+word: Flock => Hodos
+word: FLOCK => HODOS
+
+# Underscore compounds (substr — \b does not split on _)
+substr: FLOCK_DATA_DIR => HODOS_DATA_DIR
+substr: FLOCK_HOST => HODOS_HOST
+substr: FLOCK_PORT => HODOS_PORT
+substr: FLOCK_ICON => HODOS_ICON
+substr: FLOCK_ => HODOS_
+substr: flock_state => hodos_state
+substr: flock_ => hodos_
+
+# Filenames and paths
+substr: flock-data => hodos-data
+substr: .flock/ => .hodos/
+substr: .flock => .hodos
+
+# Config files
+substr: flock.env => hodos.env
+substr: flock-ssot => hodos-ssot
+substr: flock-run => hodos-run
+substr: flocksync => hodossync
+substr: FLOCKSYNC => HODOSSYNC
+
+# Daemon name
+substr: estate/flock => estate/hodos
+substr: daemons.flock => daemons.hodos
+substr: /flock => /hodos

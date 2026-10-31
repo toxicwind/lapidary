@@ -1,0 +1,57 @@
+# chalcopyrite rename pairs — cuttinggate -> chalcopyrite (front door rebrand)
+#
+# Word: OLD => NEW (whole word \bOLD\b, case-sensitive)
+# Substr: OLD => NEW (substring)
+#
+# WHY: the estate's front-door router is renamed `cuttinggate` to
+# `chalcopyrite` as part of the geode pen consolidation. CuFeS2 is the primary
+# copper ore; Greek chalkos (copper) + pyros (fire): the gate that sorts and
+# reduces ore by fire — exactly what a strategy router does.
+#
+# SCOPE DISCIPLINE (2026-10-25)
+# --------------------------------
+# This pairs file renames the PRODUCT IDENTITY only. It deliberately does NOT
+# rename `flock` or `herd`:
+#
+#   - `flock`/`herd` are still-live SEMANTIC names in this codebase: the key
+#     files at `~/.tau/flock.key` and `~/.tau/herd.key`, the model ids
+#     `flock-deepseek-v4-flash` / `flock-nemotron-35-lightning`, the
+#     `FLOCK_ROUTER_PORT` / `HERD_PORT` env vars, and the gateway-probe
+#     labels in src/audit.ts.
+#   - Renaming those wholesale would break the live key files, the model ids
+#     clients request, and the env vars the estate actually exports.
+#
+# The DUPLICATE provider-map entries are collapsed by a separate, surgical
+# edit (src/config.ts) — not by a token rename. See the commit message.
+
+# --- package identity -------------------------------------------------------
+substr: @toxicwind/cuttinggate => @toxicwind/chalcopyrite
+substr: cuttinggate-serve.sh => chalcopyrite-serve.sh
+
+# --- the bare name as a word -----------------------------------------------
+word: cuttinggate => chalcopyrite
+word: CuttingGate => Chalcopyrite
+word: CUTTINGGATE => CHALCOPYRITE
+
+# --- env-var / identifier prefix forms (INCLUDES_ are word-char joined) ---
+substr: CUTTINGGATE_ => CHALCOPYRITE_
+substr: cuttinggate_ => chalcopyrite_
+substr: CuttingGate_ => Chalcopyrite_
+
+# --- paths ------------------------------------------------------------------
+substr: /cuttinggate/ => /chalcopyrite/
+substr: router/cuttinggate => router/chalcopyrite
+substr: CUTTINGGATE_PORT => CHALCOPYRITE_PORT
+
+# --- do NOT touch these: live identifiers of OTHER things -------------------
+exclude: CUTTINGGATE_API_KEY
+exclude: cuttinggate-api-key
+exclude: FLOCK_API_KEY
+exclude: FLOCK_ROUTER_PORT
+exclude: HERD_PORT
+exclude: HERD_KEY
+
+# --- geode home redirects (2026-10-26 cutover: products live in geode) ------
+substr: pens/ranch/forge/router/chalcopyrite => pens/geode/products/chalcopyrite
+substr: estate/ranch/mesh/proxy/chalcopyrite => pens/geode/products/chalcopyrite
+substr: pens/ranch/forge/router/cuttinggate => pens/geode/products/chalcopyrite

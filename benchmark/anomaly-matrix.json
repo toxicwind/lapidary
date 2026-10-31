@@ -1,0 +1,53 @@
+{
+  "source": "verified 2026-10-31 from /tmp artifacts",
+  "anomalies": [
+    {
+      "gt": "A1",
+      "detector": "a1_abscission",
+      "artifact": "kappa-suite-serial.log",
+      "evidence": "296 files|144 passed|152 failed|7052.7s; exec cancels child session [60001.79ms]"
+    },
+    {
+      "gt": "A2",
+      "detector": "a2_velamen",
+      "artifact": "rig-build.log",
+      "evidence": "No space left; Disk quota exceeded os error 122 /tmp/rig-fix"
+    },
+    {
+      "gt": "A3",
+      "detector": "a3_pseudobulb",
+      "artifact": "router-25250.log",
+      "evidence": "SQLITE_IOERR_WRITE errno 778; groq 401 Invalid API Key"
+    },
+    {
+      "gt": "A4",
+      "detector": "a4_aquaporin",
+      "artifact": "tau-llm-request-15bbdb3a55c4cce4.json",
+      "evidence": "header deepseek-v4-flash; glm-5.3-flash 123x wire"
+    },
+    {
+      "gt": "A5",
+      "detector": "a5_phloem",
+      "artifact": "tau-llm-request-15bb6931625ec2fc.json",
+      "evidence": "<advisory adviser=Tauvisor>; decorative-compliance marker"
+    },
+    {
+      "gt": "A6",
+      "detector": "a6_meristem",
+      "artifact": "argos-boot.log + keepalive-tailscale.json",
+      "evidence": "20764B/18785 NUL; bin/argos ENOENT; 3 segments; 881 pokes 0 ok"
+    },
+    {
+      "gt": "A7",
+      "detector": "a7_passage",
+      "artifact": "typo-final.json",
+      "evidence": "642 files,42762 msgs,hits 6623; code-token FPs canst/evil/arc"
+    },
+    {
+      "gt": "A8",
+      "detector": "a8_rhizome",
+      "artifact": "fs-scan kite/fledge/hatch",
+      "evidence": "clonal symlink drift outside pens namespace"
+    }
+  ]
+}

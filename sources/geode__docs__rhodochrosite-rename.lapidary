@@ -1,0 +1,38 @@
+# rhodochrosite rename pairs — hodos -> rhodochrosite (gateway rebrand)
+#
+# Word: OLD => NEW (whole word \bOLD\b, case-sensitive)
+# substr: OLD => NEW (substring)
+#
+# Every substr/word rule auto-expands to UPPER and Capitalized variants.
+# Rules apply in file order. Exclusions are placeholder-armored first.
+
+# ---- code identifiers -------------------------------------------------------
+word: hodos => rhodochrosite
+word: Hodos => Rhodochrosite
+word: HODOS => RHODOCHROSITE
+
+# compound / path forms (substring — \b does not split on _ or -)
+substr: hodos- => rhodochrosite-
+substr: hodos_ => rhodochrosite_
+substr: .hodos => .rhodochrosite
+substr: /hodos => /rhodochrosite
+substr: HODOS_ => RHODOCHROSITE_
+substr: HODOS- => RHODOCHROSITE-
+
+# data / env / config keys
+substr: hodos.data => rhodochrosite.data
+substr: HODOS_DATA => RHODOCHROSITE_DATA
+substr: hodos.env => rhodochrosite.env
+substr: hodos-key => rhodochrosite-key
+substr: HODOS_KEY => RHODOCHROSITE_KEY
+
+# package name
+substr: @toxicwind/hodos => @toxicwind/rhodochrosite
+
+# ---- do NOT touch: these are OTHER things -----------------------------------
+exclude: RHODOCHROSITE_PORT
+exclude: rhodochrosite-port
+
+# --- geode home redirects (2026-10-26 cutover) ------------------------------
+substr: pens/olympus/products/rhodochrosite => pens/geode/products/rhodochrosite
+substr: pens/ranch/rhodochrosite => pens/geode/products/rhodochrosite
