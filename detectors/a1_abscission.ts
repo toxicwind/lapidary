@@ -65,15 +65,18 @@ export const a1_abscission: Module = {
 			env: { ...process.env, OGC_GCFILE: pidFile },
 		});
 
-		const start = performance.now();
+		const cgroup = `/sys/fs/cgroup/orchid_${process.pid}/${id}`;
+		const parentCg = `/sys/fs/cgroup/orchid_${process.pid}`;
+		let cgroupOk = false;
+		try {
+			const start = performance.now();
 		let reason: "AUXIN_COLLAPSE" | "CLEAN_SENESCENCE" = "CLEAN_SENESCENCE";
 		let ethyleneMs = 0;
 
 		// Best-effort cgroup.v2 AZ (bounded: 1500ms. If sudo/cgroup is unavailable
 		// we fall back to pgroup SIGKILL, which already severs descendants via the
 		// process-group leader). NEVER block the event loop on a hung sudo.
-		const cgroup = `/sys/fs/cgroup/orchid_${process.pid}/${id}`;
-		const cgroupOk = (() => {
+		cgroupOk = (() => {
 			if (!shTime(["sudo", "-n", "mkdir", "-p", cgroup], 1500).ok) return false;
 			return shTime(["sudo", "-n", "sh", "-c", `chmod 777 ${cgroup}; echo ${proc.pid} > ${cgroup}/cgroup.procs`], 1500).ok;
 		})();
@@ -122,7 +125,6 @@ export const a1_abscission: Module = {
 		}
 		if (cgroupOk) shTime(["sudo", "-n", "rmdir", cgroup], 1000);
 		const grandchildSevered = grandchildState === "GONE" || grandchildState === "Z";
-
 		findings.push({
 			id: "orchid.a1.severance-demo",
 			dedupe_key: `orchid.a1.sever.${id}`,
@@ -145,6 +147,27 @@ export const a1_abscission: Module = {
 			},
 			ts: now(),
 		});
+		} finally {
+			// never leak a stuck branch: kill the pgroup, best-effort cgroup
+			// cleanup, and the scratch pid file — even on an error mid-await.
+			try { process.kill(-(proc.pid as number), "SIGKILL"); } catch { /* gone */ }
+			try { proc.kill("SIGKILL"); } catch { /* gone */ }
+			if (cgroupOk) {
+				for (let attempt = 0; attempt < 5; attempt++) {
+					if (shTime(["sudo", "-n", "rmdir", cgroup], 800).ok) break;
+					await Bun.sleep(100); // let a killed zombie get reaped, then retry
+				}
+				shTime(["sudo", "-n", "rmdir", parentCg], 800);
+				// detached self-cleaning reaper: clears the parent dir the moment the
+				// last killed zombie is reaped — survives this process exiting.
+				const reaper =
+					`sleep 0.8; sudo -n rmdir ${cgroup} 2>/dev/null; ` +
+					`for i in 1 2 3 4 5 6; do sudo -n rmdir ${parentCg} 2>/dev/null && break; sleep 0.4; done`;
+				const reap = Bun.spawn(["sh", "-c", reaper], { detached: true, stdio: ["ignore", "ignore", "ignore"] });
+				try { reap.unref(); } catch { /* ignore */ }
+			}
+			try { fs.unlinkSync(pidFile); } catch { /* ignore */ }
+		}
 
 		return { findings };
 	},
