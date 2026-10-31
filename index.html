@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><title>lapidary · orchid-detect compare</title>
+<style>body{background:#0d1117;color:#c9d1d9;font-family:ui-monospace,monospace;max-width:1000px;margin:2rem auto;padding:0 1rem}
+h1{color:#79c0ff}h2{color:#58a6ff}a{color:#58a6ff}table{border-collapse:collapse;width:100%;margin:1rem 0}
+td,th{border:1px solid #30363d;padding:6px 10px;text-align:left}th{background:#161b22}
+.win{color:#7ee787;font-weight:700}.lose{color:#f85149;font-weight:700}.kpi{display:flex;gap:2rem;flex-wrap:wrap}
+.kpi b{display:block;font-size:1.6rem;color:#79c0ff}</style></head><body>
+<h1>🔬 lapidary — orchid-detect</h1>
+<p>generated 2026-10-31T21:53:09.403Z · framework <b>orchid-detect (lapidary detect rule family)</b></p>
+<div class="kpi">
+  <div>ground truth<b>8</b></div>
+  <div>recall<b>100%</b></div>
+  <div>true+<b>9</b></div>
+  <div>false+<b>2</b></div>
+  <div>dedupe-ready<b>100%</b></div>
+</div>
+<h2>Score</h2>
+<table><tr><th>GT</th><th>detector</th><th>artifact</th><th>detected</th><th>lat ms</th><th>findings</th></tr>
+<tr><td>A1</td><td>a1_abscission</td><td>kappa-suite-serial.log</td><td class="win">✓</td><td>2545</td><td>2</td></tr>
+<tr><td>A2</td><td>a2_velamen</td><td>rig-build.log</td><td class="win">✓</td><td>18</td><td>2</td></tr>
+<tr><td>A3</td><td>a3_pseudobulb</td><td>router-25250.log</td><td class="win">✓</td><td>1</td><td>2</td></tr>
+<tr><td>A4</td><td>a4_aquaporin</td><td>tau-llm-request-15bbdb3a55c4cce4.json</td><td class="win">✓</td><td>17</td><td>1</td></tr>
+<tr><td>A5</td><td>a5_phloem</td><td>tau-llm-request-15bb6931625ec2fc.json</td><td class="win">✓</td><td>11</td><td>2</td></tr>
+<tr><td>A6</td><td>a6_meristem</td><td>argos-boot.log + keepalive-tailscale.json</td><td class="win">✓</td><td>1</td><td>3</td></tr>
+<tr><td>A7</td><td>a7_passage</td><td>typo-final.json</td><td class="win">✓</td><td>0</td><td>2</td></tr>
+<tr><td>A8</td><td>a8_rhizome</td><td>fs-scan kite/fledge/hatch</td><td class="win">✓</td><td>9</td><td>2</td></tr></table>
+<h2>Per detector</h2>
+<table><tr><th>module</th><th>flag</th><th>lat ms</th><th>findings</th><th>note</th></tr>
+<tr><td>a1_abscission</td><td>on</td><td>2545ms</td><td>2</td><td>-</td></tr>
+<tr><td>a2_velamen</td><td>on</td><td>18ms</td><td>2</td><td>-</td></tr>
+<tr><td>a3_pseudobulb</td><td>on</td><td>1ms</td><td>2</td><td>-</td></tr>
+<tr><td>a4_aquaporin</td><td>on</td><td>17ms</td><td>1</td><td>-</td></tr>
+<tr><td>a5_phloem</td><td>on</td><td>11ms</td><td>2</td><td>-</td></tr>
+<tr><td>a6_meristem</td><td>on</td><td>1ms</td><td>3</td><td>-</td></tr>
+<tr><td>a7_passage</td><td>on</td><td>0ms</td><td>2</td><td>-</td></tr>
+<tr><td>a8_rhizome</td><td>on</td><td>9ms</td><td>2</td><td>-</td></tr></table>
+<h2>vs agentic-moment</h2><p>agentic-moment log-helper is the shipping/aggregation layer (canonical OpenTelemetry Collector, chosen by its datadog vs otel/vector/signoz semantic-ratio compare). orchid emits data-framed, dedupe-keyed detections that ride those collectors unchanged — it adds automated anomaly coverage over the corpus that the shipping layer alone does not perform.</p>
+<pre id="data" style="display:none">{"generatedAt":"2026-10-31T21:53:09.403Z","framework":"orchid-detect (lapidary detect rule family)","corpus":"verified /tmp artifacts","groundTruth":8,"truePositives":9,"falsePositives":2,"demonstrationFindings":5,"precisionAllFindings":0.563,"precisionAnomalyLabeled":0.818,"groundTruthRecall":1,"coverage":"8/8","logHelperReady":{"totalFindings":16,"dedupeKeyed":16,"pctDedupeKeyed":100},"compareWithAgenticMoment":"agentic-moment log-helper is the shipping/aggregation layer (canonical OpenTelemetry Collector, chosen by its datadog vs otel/vector/signoz semantic-ratio compare). orchid emits data-framed, dedupe-keyed detections that ride those collectors unchanged — it adds automated anomaly coverage over the corpus that the shipping layer alone does not perform.","rows":[{"gt":"A1","detector":"a1_abscission","artifact":"kappa-suite-serial.log","detected":true,"latencyMs":2545,"findings":2,"evidence":"296 files|144 passed|152 failed|7052.7s; exec cancels child session [60001.79ms]"},{"gt":"A2","detector":"a2_velamen","artifact":"rig-build.log","detected":true,"latencyMs":18,"findings":2,"evidence":"No space left; Disk quota exceeded os error 122 /tmp/rig-fix"},{"gt":"A3","detector":"a3_pseudobulb","artifact":"router-25250.log","detected":true,"latencyMs":1,"findings":2,"evidence":"SQLITE_IOERR_WRITE errno 778; groq 401 Invalid API Key"},{"gt":"A4","detector":"a4_aquaporin","artifact":"tau-llm-request-15bbdb3a55c4cce4.json","detected":true,"latencyMs":17,"findings":1,"evidence":"header deepseek-v4-flash; glm-5.3-flash 123x wire"},{"gt":"A5","detector":"a5_phloem","artifact":"tau-llm-request-15bb6931625ec2fc.json","detected":true,"latencyMs":11,"findings":2,"evidence":"\u003cadvisory adviser=Tauvisor>; decorative-compliance marker"},{"gt":"A6","detector":"a6_meristem","artifact":"argos-boot.log + keepalive-tailscale.json","detected":true,"latencyMs":1,"findings":3,"evidence":"20764B/18785 NUL; bin/argos ENOENT; 3 segments; 881 pokes 0 ok"},{"gt":"A7","detector":"a7_passage","artifact":"typo-final.json","detected":true,"latencyMs":0,"findings":2,"evidence":"642 files,42762 msgs,hits 6623; code-token FPs canst/evil/arc"},{"gt":"A8","detector":"a8_rhizome","artifact":"fs-scan kite/fledge/hatch","detected":true,"latencyMs":9,"findings":2,"evidence":"clonal symlink drift outside pens namespace"}],"perDetector":[{"id":"a1_abscission","enabled":true,"latencyMs":2545,"findings":2},{"id":"a2_velamen","enabled":true,"latencyMs":18,"findings":2},{"id":"a3_pseudobulb","enabled":true,"latencyMs":1,"findings":2},{"id":"a4_aquaporin","enabled":true,"latencyMs":17,"findings":1},{"id":"a5_phloem","enabled":true,"latencyMs":11,"findings":2},{"id":"a6_meristem","enabled":true,"latencyMs":1,"findings":3},{"id":"a7_passage","enabled":true,"latencyMs":0,"findings":2},{"id":"a8_rhizome","enabled":true,"latencyMs":9,"findings":2}]}</pre>
+</body></html>
