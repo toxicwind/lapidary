@@ -471,7 +471,51 @@ export function runBenchmark(outcomes: DetectOutcome[], runsDir: string): any {
 	};
 	fs.writeFileSync(path.join(runsDir, "benchmark.json"), JSON.stringify(report, null, 2));
 	fs.writeFileSync(path.join(runsDir, "benchmark.md"), renderBenchmarkMd(report));
+	const siteDir = path.join(import.meta.dir, "..", "site");
+	fs.mkdirSync(siteDir, { recursive: true });
+	fs.writeFileSync(path.join(siteDir, "index.html"), renderBenchmarkSite(report));
 	return report;
+}
+
+/** Pages-ready static compare (spinel-style dark site). Served from
+ *  https://toxicwind.github.io/lapidary/ after `bun bin/publish-site.ts`. */
+export function renderBenchmarkSite(report: Record<string, any>): string {
+	const esc = (s: unknown): string => String(s ?? "").replace(/[&<>"]/g, c =>
+		c === "&" ? "&amp;" : c === "<" ? "&lt;" : c === ">" ? "&gt;" : "&quot;");
+	const rows = (report.rows as Array<Record<string, any>>)
+		.map(r => `<tr><td>${esc(r.gt)}</td><td>${esc(r.detector)}</td><td>${esc(r.artifact)}</td>` +
+			`<td class="${r.detected ? "win" : "lose"}">${r.detected ? "✓" : "✗"}</td>` +
+			`<td>${esc(r.latencyMs)}</td><td>${esc(r.findings)}</td></tr>`)
+		.join("\n");
+	const per = (report.perDetector as Array<Record<string, any>>)
+		.map(d => `<tr><td>${esc(d.id)}</td><td>${d.enabled ? "on" : "off"}</td><td>${esc(d.latencyMs)}ms</td>` +
+			`<td>${esc(d.findings)}</td><td>${esc(d.reason ?? "-")}</td></tr>`)
+		.join("\n");
+	const json = JSON.stringify(report);
+	return `<!doctype html><html><head><meta charset="utf-8"><title>lapidary · orchid-detect compare</title>
+<style>body{background:#0d1117;color:#c9d1d9;font-family:ui-monospace,monospace;max-width:1000px;margin:2rem auto;padding:0 1rem}
+h1{color:#79c0ff}h2{color:#58a6ff}a{color:#58a6ff}table{border-collapse:collapse;width:100%;margin:1rem 0}
+td,th{border:1px solid #30363d;padding:6px 10px;text-align:left}th{background:#161b22}
+.win{color:#7ee787;font-weight:700}.lose{color:#f85149;font-weight:700}.kpi{display:flex;gap:2rem;flex-wrap:wrap}
+.kpi b{display:block;font-size:1.6rem;color:#79c0ff}</style></head><body>
+<h1>🔬 lapidary — orchid-detect</h1>
+<p>generated ${esc(report.generatedAt)} · framework <b>${esc(report.framework)}</b></p>
+<div class="kpi">
+  <div>ground truth<b>${esc(report.groundTruth)}</b></div>
+  <div>recall<b>${(Number(report.groundTruthRecall) * 100).toFixed(0)}%</b></div>
+  <div>true+<b>${esc(report.truePositives)}</b></div>
+  <div>false+<b>${esc(report.falsePositives)}</b></div>
+  <div>dedupe-ready<b>${esc(report.logHelperReady.pctDedupeKeyed)}%</b></div>
+</div>
+<h2>Score</h2>
+<table><tr><th>GT</th><th>detector</th><th>artifact</th><th>detected</th><th>lat ms</th><th>findings</th></tr>
+${rows}</table>
+<h2>Per detector</h2>
+<table><tr><th>module</th><th>flag</th><th>lat ms</th><th>findings</th><th>note</th></tr>
+${per}</table>
+<h2>vs agentic-moment</h2><p>${esc(report.compareWithAgenticMoment)}</p>
+<pre id="data" style="display:none">${json.replace(/</g, "\\u003c")}</pre>
+</body></html>`;
 }
 
 function renderBenchmarkMd(report: Record<string, any>): string {
