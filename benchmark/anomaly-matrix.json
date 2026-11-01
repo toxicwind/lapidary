@@ -48,6 +48,12 @@
       "detector": "a8_rhizome",
       "artifact": "fs-scan kite/fledge/hatch",
       "evidence": "clonal symlink drift outside pens namespace"
+    },
+    {
+      "gt": "A9",
+      "detector": "a9_stolon",
+      "artifact": "lease-guard-forkstorm.log",
+      "evidence": "bun -e while(true) spawnSync + non-awaited Bun.sleep; 155 forks/s 25.4h; inline -e daemon spec"
     }
   ]
 }

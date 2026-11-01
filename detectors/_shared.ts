@@ -228,6 +228,7 @@ const NAMES: Array<[string, string]> = [
 	["typo-final.json", "json"],
 	["tau-llm-request-15bbdb3a55c4cce4.json", "jsonl"],
 	["tau-llm-request-15bb6931625ec2fc.json", "jsonl"],
+	["lease-guard-forkstorm.log", "log"],
 ];
 
 export function resolveCorpus(env: NodeJS.ProcessEnv = process.env): Record<string, CorpusEntry> {

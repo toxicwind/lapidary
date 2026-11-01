@@ -8,7 +8,8 @@
     "a5_phloem": { "enabled": true, "params": { "velocityFloor": 35, "compactionDelta": 100000 } },
     "a6_meristem": { "enabled": true, "params": { "minPokes": 8, "applySpawn": false, "applyTailscaleUp": false } },
     "a7_passage": { "enabled": true, "params": { "haltWriteFirst": true } },
-    "a8_rhizome": { "enabled": true, "params": { "shmBytes": 16777216 } }
+    "a8_rhizome": { "enabled": true, "params": { "shmBytes": 16777216 } },
+    "a9_stolon": { "enabled": true, "params": { "applyStolon": false, "proofWindowMs": 700, "proofWindowHours": 24, "unpacedIterPerSec": 155 } }
   },
   "meta": {
     "agentic": { "modelRoute": "default", "openSelection": true, "maxModelMs": 8000 }

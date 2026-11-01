@@ -1,0 +1,12 @@
+# lease-guard fork storm evidence — awrawr-pc 2026-10-31 (tau session)
+# symptom: /proc/stat processes delta ~775 per 5s (~155 forks/s) while 6s bash sampling found total_new=0
+# (spawn-exit completes inside the sample window). load 2.66 with 88% idle = runnable churn, not compute.
+854446  831710   91448 /home/toxic/.bun/bin/bun -e while(true){ const p = Bun.spawnSync(["bun","/home/toxic/pens/estate/products/estate-ops/bin/estate-lease-guard.ts","--kill-owner"]); Bun.sleep(60000); }
+# BUG: Bun.sleep(60000) is never awaited — the pace promise is discarded and the loop re-enters immediately.
+# Each iteration spawns estate-lease-guard.ts which sweeps /proc (~25 short-lived subprocesses).
+# culprit daemon spec in pitchfork.toml (uptime 91448s = 25.4h continuous storm):
+[daemons."estate-lease-guard"]
+run = "exec bun -e while(true){ Bun.spawnSync(\"bun estate-lease-guard.ts --kill-owner\"); Bun.sleep(60000); }"
+# the correct file estate-lease-guard-loop.ts already had await Bun.sleep(60_000); the daemon was never
+# restarted to pick it up (stale-deploy masks fixed source, anomaly #73 pattern).
+# post-fix residual churn: bun --hot windmill ~4/s, ss -ltn health probe ~4/s, reconcile-funnel.sh 1/30s.

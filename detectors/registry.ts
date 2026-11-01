@@ -9,7 +9,8 @@ export async function loadDetector(id: string): Promise<Module | undefined> {
     case "a6_meristem": return (await import("./a6_meristem.ts")).a6_meristem;
     case "a7_passage": return (await import("./a7_passage.ts")).a7_passage;
     case "a8_rhizome": return (await import("./a8_rhizome.ts")).a8_rhizome;
+    case "a9_stolon": return (await import("./a9_stolon.ts")).a9_stolon;
     default: return undefined;
   }
 }
-export const DETECTOR_IDS = ["a1_abscission","a2_velamen","a3_pseudobulb","a4_aquaporin","a5_phloem","a6_meristem","a7_passage","a8_rhizome"];
+export const DETECTOR_IDS = ["a1_abscission","a2_velamen","a3_pseudobulb","a4_aquaporin","a5_phloem","a6_meristem","a7_passage","a8_rhizome","a9_stolon"];

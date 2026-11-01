@@ -10,3 +10,4 @@ detectors:
   - detect: a6_meristem       # NUL-hole scrub + argos/xerj bin + tailscale health
   - detect: a7_passage        # code-token typo filter + kinetic keystroke decode
   - detect: a8_rhizome        # /dev/shm mmap ring + clonal symlink audit
+  - detect: a9_stolon         # runaway spawn-loop stolon (missing-await pace storm)

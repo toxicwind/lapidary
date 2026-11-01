@@ -10,7 +10,7 @@ the exact same parser, scoping and journal machinery as the transforms.
 
 - **One engine, one contract.** A `.lapidary` manifest already expresses "run
   this rule set over this scope, dry-run first, journal every change". Detect
-  rules ride that: `sources/orchid.lapidary` enables all 8 flags; `--flags`
+  rules ride that: `sources/orchid.lapidary` enables all 9 flags; `--flags`
   toggles them at runtime like any other lapidary scope knob.
 - **Modular, not a monolith.** Each mechanism is its own file in
   `detectors/` (`a1_abscission.ts` … `a8_rhizome.ts`), discovered by id through
@@ -20,7 +20,7 @@ the exact same parser, scoping and journal machinery as the transforms.
   ride agentic-moment's shipping layer (canonical **OpenTelemetry Collector**,
   chosen by its datadog vs otel/vector/signoz semantic-ratio compare) unchanged.
 
-## The 8 flag-gated detectors
+## The 9 flag-gated detectors
 
 | flag | mechanism | artifact it detects | ground truth |
 |---|---|---|---|
@@ -32,6 +32,7 @@ the exact same parser, scoping and journal machinery as the transforms.
 | `a6_meristem` | NUL-hole scrub + argos/xerj bin + tailscale health | argos ENOENT / 90%-NUL log / 881-poke dead tailscale | A6 |
 | `a7_passage` | code-token typo filter + kinetic keystroke decode | typo-final.json raw hits dominated by code FPs | A7 |
 | `a8_rhizome` | /dev/shm mmap ring + clonal symlink audit | tool-output truncation lies + kite/fledge/hatch drift | A8 |
+| `a9_stolon` | runaway spawn-loop detection (missing-await Bun.sleep pace storm, inline `-e` daemon specs, shell reconcile cadence) | 155 forks/s × 25.4 h lease-guard storm from an unpaced `while(true){spawnSync; Bun.sleep}` | A9 |
 
 ## CLI
 
