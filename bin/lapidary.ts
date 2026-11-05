@@ -356,6 +356,61 @@ export function stamp(): string {
 	return new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
 }
 
+// Expiring run logs (2026-11-05): every lapidary invocation appends one JSON
+// line to runs/runs.jsonl and prunes entries (and empty stamp dirs) older
+// than LAPIDARY_LOG_TTL_DAYS (default 14). Logs are evidence with a lease —
+// not an accumulation.
+const RUNS_ROOT = path.join(import.meta.dir, "..", "runs");
+const LOG_TTL_DAYS = Number(process.env.LAPIDARY_LOG_TTL_DAYS ?? 14);
+
+export function journalRun(entry: {
+	mode: string;
+	repo?: string;
+	edits?: number;
+	files?: number;
+	stale?: number;
+	extra?: Record<string, unknown>;
+}): void {
+	try {
+		fs.mkdirSync(RUNS_ROOT, { recursive: true });
+		fs.appendFileSync(
+			path.join(RUNS_ROOT, "runs.jsonl"),
+			JSON.stringify({ at: new Date().toISOString(), ...entry }) + "\n",
+		);
+	} catch {}
+}
+
+export function pruneExpiredLogs(): number {
+	const cutoff = Date.now() - LOG_TTL_DAYS * 86_400_000;
+	let pruned = 0;
+	try {
+		const journal = path.join(RUNS_ROOT, "runs.jsonl");
+		if (fs.existsSync(journal)) {
+			const keep: string[] = [];
+			for (const line of fs.readFileSync(journal, "utf8").split("\n")) {
+				if (!line.trim()) continue;
+				try {
+					const rec = JSON.parse(line);
+					if (Date.parse(rec.at) >= cutoff) keep.push(line);
+					else pruned++;
+				} catch { pruned++; }
+			}
+			fs.writeFileSync(journal, keep.length ? keep.join("\n") + "\n" : "");
+		}
+		// Per-run stamp dirs (detect mode artifacts) expire on the same lease.
+		for (const d of fs.existsSync(RUNS_ROOT) ? fs.readdirSync(RUNS_ROOT) : []) {
+			const full = path.join(RUNS_ROOT, d);
+			if (d === "runs.jsonl" || !fs.statSync(full).isDirectory()) continue;
+			const mtime = fs.statSync(full).mtimeMs;
+			if (mtime < cutoff) {
+				fs.rmSync(full, { recursive: true, force: true });
+				pruned++;
+			}
+		}
+	} catch {}
+	return pruned;
+}
+
 function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
 	return Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(new Error("detector-timeout")), ms))]);
 }
@@ -560,16 +615,24 @@ export function isSymlink(repo: string, rel: string): boolean {
 // CLI
 // ---------------------------------------------------------------------------
 
-function main(): void {
+async function main(): Promise<void> {
 	const argv = process.argv.slice(2);
+	const prunedLogs = pruneExpiredLogs();
+	if (prunedLogs > 0) console.log(`[logs] pruned ${prunedLogs} expired run-log entries (TTL ${LOG_TTL_DAYS}d)`);
 	if (argv.length === 0 || argv.includes("--help") || argv.includes("-h")) {
 		console.log(`usage: lapidary --repo <dir> --rules <a.lapidary,b.lapidary> [--dry-run] [--commit "msg"] [--undo]
        lapidary --detect --rules <manifest.lapidary> [--flags ORCHID_FLAGS] [--bench]
+       lapidary --fluxling-verify <dir> <term>   # pens-wide stale-ref verification via fluxling
 
 detect rule family (orchid detectors, all-Bun, feature-flagged):
   - detect: a1_abscission   # and a2..a8 — see sources/orchid.lapidary
   --flags  ORCHID_FLAGS     # all | none | a1,a5 | a4=off (defaults from orchid.flags.json)
   --bench                   # score against benchmark/anomaly-matrix.json + emit report
+
+fluxling-verify (2026-11-05 integration):
+  After a rename, verify NO stale references remain anywhere in the pens.
+  Uses fluxling's awareness: trio route-trace (dispatch tables) + argos
+  pens-corpus recall (docs/products). Reports every stale ref with its path.
 
 schema (YAML .lapidary — ast-grep/renovate/comby borrow):
   id: <rule-id>
@@ -601,6 +664,74 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 	const bench = argv.includes("--bench");
 	const runsDir = path.join(import.meta.dir, "..", "runs", stamp());
 
+	const fluxlingVerify = argv.includes("--fluxling-verify");
+	if (fluxlingVerify) {
+		// lapidary --fluxling-verify <dir> <term> — pens-wide stale-ref
+		// verification via fluxling's awareness (trio route-trace + argos
+		// pens-corpus recall). Reports every stale ref with its path.
+		const [dir, term] = argv.slice(argv.indexOf("--fluxling-verify") + 1);
+		if (!dir || !term) {
+			console.error("lapidary: --fluxling-verify requires <dir> <term>");
+			process.exit(2);
+		}
+		let stale = 0;
+		// 1. Content refs (grep the dir).
+		const grep = Bun.spawnSync(["grep", "-rli", term, dir], { stdout: "pipe" });
+		const contentHits = Buffer.from(grep.stdout ?? Buffer.alloc(0)).toString("utf8").split("\n").filter(Boolean);
+		for (const hit of contentHits) {
+			console.log(`stale-ref(content): ${hit}`);
+			stale++;
+		}
+		// 2. Filename/folder refs.
+		const find = Bun.spawnSync(["bash", "-c", `find ${dir} -iname "*${term}*"`], { stdout: "pipe" });
+		const nameHits = Buffer.from(find.stdout ?? Buffer.alloc(0)).toString("utf8").split("\n").filter(Boolean);
+		for (const hit of nameHits) {
+			console.log(`stale-ref(name): ${hit}`);
+			stale++;
+		}
+		// 3. Argos corpus recall (the estate docs/products context).
+		try {
+			const res = await fetch(process.env.ARGOS_URL ?? "http://127.0.0.1:25254/pens-corpus/_search", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					query: { bool: { should: [{ match_phrase: { text: term } }], minimum_should_match: 1 } },
+					_source: ["ax_path"], size: 20,
+				}),
+			});
+			if (res.ok) {
+				const j = await res.json();
+				for (const h of j?.hits?.hits ?? []) {
+					const ax = h._source?.ax_path ?? "";
+					// ax_path is pens-relative like "kind:readme/geode/products/x/README.md"
+					// — strip the kind: prefix and resolve to the FULL filesystem path
+					// so the reported refs are directly usable (no ls-bug).
+					const rel = ax.replace(/^kind:[a-z]+\//, "");
+					// ax_path normalizes products/ away (e.g. "geode/coreelec-mcp/README.md"
+					// is actually "geode/products/coreelec-mcp/README.md"). Insert the
+					// products/ segment after the pen name when the path doesn't exist as-is.
+					let full = `/home/toxic/pens/${rel}`;
+					if (!fs.existsSync(full)) {
+						const segs = rel.split("/");
+						if (segs.length > 1) {
+							const alt = `/home/toxic/pens/${segs[0]}/products/${segs.slice(1).join("/")}`;
+							if (fs.existsSync(alt)) full = alt;
+						}
+					}
+					if (full && !full.includes(`/${term}`)) {
+						console.log(`stale-ref(argos): ${full}`);
+						stale++;
+					}
+				}
+			}
+		} catch (e) {
+			console.error(`lapidary: argos unavailable: ${(e as Error).message}`);
+		}
+		console.log(`\nfluxling-verify: ${stale} stale refs for "${term}" in ${dir}`);
+		journalRun({ mode: "fluxling-verify", repo: dir, stale });
+		process.exit(stale > 0 ? 1 : 0);
+	}
+
 	if (detect) {
 		// detect / --detect <manifest.lapidary> [--flags ORCHID_FLAGS] [--bench]
 		if (!rulesArg) {
@@ -619,6 +750,7 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 			} else {
 				console.log(`[detect] journal -> ${path.join(runsDir, ".orchid-findings.jsonl")}`);
 			}
+			journalRun({ mode: bench ? "detect-bench" : "detect", repo, extra: { runsDir } });
 		})().catch(e => {
 			console.error(e);
 			process.exit(1);
@@ -657,6 +789,16 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 		let content: string;
 		try {
 			if (!fs.statSync(full).isFile()) continue;
+			// Binary guard (2026-11-03): readFileSync utf8 mangles non-UTF-8 bytes
+			// (every invalid byte → U+FFFD) and writeFileSync persists the damage.
+			// Sniff the first 8KiB: NUL byte or U+FFFD-heavy ⇒ skip entirely.
+			const sniff = Buffer.from(fs.readFileSync(full).subarray(0, 8192));
+			if (sniff.includes(0)) continue;
+			let fffd = 0;
+			for (let i = 0; i + 2 < sniff.length; i += 1) {
+				if (sniff[i] === 0xef && sniff[i + 1] === 0xbf && sniff[i + 2] === 0xbd) { fffd += 1; i += 2; }
+			}
+			if (fffd > 4) continue;
 			content = fs.readFileSync(full, "utf8");
 		} catch { continue; }
 		const applied = applyRules(content, rules, excludes, rel, globalInclude, globalIgnore);
@@ -677,6 +819,7 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 		}
 	}
 	console.log(`edits=${totalEdits} files=${totalFiles}${dryRun ? " (dry-run)" : ""}`);
+	journalRun({ mode: dryRun ? "rewrite-dry" : "rewrite", repo, edits: totalEdits, files: totalFiles });
 	if (!dryRun) {
 		fs.writeFileSync(path.join(repo, "rename.map"), JSON.stringify(mapOut, null, 2));
 		if (commitMsg && totalFiles > 0) {
@@ -687,4 +830,4 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 	}
 }
 
-if (import.meta.main) main();
+if (import.meta.main) await main();
