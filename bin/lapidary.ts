@@ -603,8 +603,65 @@ function renderBenchmarkMd(report: Record<string, any>): string {
 	return lines.join("\n");
 }
 
+/**
+ * Resolve the git binary robustly. Spawned subprocesses (agent runtimes,
+ * eval kernels, kairos) frequently sanitize `PATH` to a minimal set that
+ * omits /usr/bin — `execFileSync("git")` then throws a bare ENOENT that
+ * looks like a missing repo. Probe the real locations once, fall back to
+ * the bare name if every probe misses (preserves normal-PATH behavior).
+ */
+let _gitBin: string | null = null;
+export function resolveGit(): string {
+	if (_gitBin) return _gitBin;
+	const candidates = [
+		"/usr/bin/git",
+		"/usr/local/bin/git",
+		"/bin/git",
+		Bun.which("git"),
+	].filter((p): p is string => Boolean(p));
+	for (const p of candidates) {
+		// Probe with execFileSync (the SAME spawn path the file listing uses) —
+		// Bun.spawnSync can succeed where node:child_process still fails when a
+		// sandbox blocks posix_spawn for a path; accepting it would hand a
+		// half-usable binary to listAllFiles.
+		try {
+			execFileSync(p, ["--version"], { stdio: "ignore" });
+			_gitBin = p;
+			return p;
+		} catch { /* try next candidate */ }
+	}
+	_gitBin = "git";
+	return _gitBin;
+}
+
 export function listTrackedFiles(repo: string): string[] {
-	return execFileSync("git", ["ls-files", "-z"], { cwd: repo, maxBuffer: 1 << 28 }).toString().split("\0").filter(Boolean);
+	return execFileSync(resolveGit(), ["ls-files", "-z"], { cwd: repo, maxBuffer: 1 << 28 }).toString().split("\0").filter(Boolean);
+}
+
+/**
+ * Recursively walk a repo when git cannot be spawned at all. Agent runtimes
+ * (eval kernels, kairos-wrapped shells) frequently strip PATH or block
+ * posix_spawn for absolute paths, so `git ls-files` is not a safe
+ * dependency for a rename tool. The walk skips every `.git` directory and
+ * returns forward-slash relative paths sorted for determinism; the caller's
+ * binary-sniff guard rejects non-UTF-8 content later.
+ */
+export function walkFiles(repo: string): string[] {
+	const out: string[] = [];
+	const stack: string[] = [""];
+	while (stack.length) {
+		const rel = stack.pop()!;
+		const abs = path.join(repo, rel);
+		let entries: fs.Dirent[];
+		try { entries = fs.readdirSync(abs, { withFileTypes: true }); } catch { continue; }
+		for (const e of entries) {
+			if (e.name === ".git") continue;
+			const relChild = rel ? `${rel}/${e.name}` : e.name;
+			if (e.isDirectory()) stack.push(relChild);
+			else if (e.isFile()) out.push(relChild);
+		}
+	}
+	return out.sort();
 }
 
 /**
@@ -616,14 +673,29 @@ export function listTrackedFiles(repo: string): string[] {
  * tracked-only walk misses.
  */
 export function listAllFiles(repo: string): string[] {
-	const tracked = listTrackedFiles(repo);
-	const untracked = execFileSync("git", ["ls-files", "-z", "--others", "--exclude-standard"], {
-		cwd: repo,
-		maxBuffer: 1 << 28,
-	})
-		.toString()
-		.split("\0")
-		.filter(Boolean);
+	let tracked: string[];
+	try {
+		tracked = listTrackedFiles(repo);
+	} catch {
+		console.error(`lapidary: git unavailable in this runtime — falling back to filesystem walk of ${repo}`);
+		return walkFiles(repo);
+	}
+	if (tracked.length === 0) {
+		// Empty `git ls-files` (fresh repo, or the git we found can't actually
+		// spawn in this sandbox) — walk the tree rather than renaming nothing.
+		console.error(`lapidary: git returned no files for ${repo} — falling back to filesystem walk`);
+		return walkFiles(repo);
+	}
+	let untracked: string[] = [];
+	try {
+		untracked = execFileSync(resolveGit(), ["ls-files", "-z", "--others", "--exclude-standard"], {
+			cwd: repo,
+			maxBuffer: 1 << 28,
+		})
+			.toString()
+			.split("\0")
+			.filter(Boolean);
+	} catch { /* git degraded: tracked list is the floor */ }
 	const seen = new Set(tracked);
 	for (const f of untracked) if (!seen.has(f)) tracked.push(f);
 	return tracked;
