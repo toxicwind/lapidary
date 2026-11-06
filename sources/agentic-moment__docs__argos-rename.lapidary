@@ -1,0 +1,91 @@
+# xerj -> argos rename pairs — the estate search engine identity (2026-11-06)
+#
+# Word: OLD => NEW (whole word \bOLD\b, case-sensitive)
+# substr: OLD => NEW (substring)
+#
+# Every substr/word rule auto-expands to UPPER and Capitalized variants.
+# Rules apply in file order. Exclusions are placeholder-armored first.
+#
+# HISTORY: the 2026-10-31 rename was docs+symlink only — this map had NO
+# xerj/argos pairs, so lapidary never detected the corpse. This file is the
+# fix: every future detector run knows the identity change.
+
+# ---- code identifiers -------------------------------------------------------
+word: xerj => argos
+word: Xerj => Argos
+word: XERJ => ARGOS
+
+# compound / path forms (substring — \b does not split on _ or -)
+substr: xerj- => argos-
+substr: xerj_ => argos_
+substr: .xerj => .argos
+substr: /xerj => /argos
+substr: XERJ_ => ARGOS_
+substr: XERJ- => ARGOS-
+
+# ---- the engine's env contract (vendored binary reads XERJ_*) --------------
+# These are the ONLY names the vendored engine understands. Any argos-side
+# surface that wants to speak them goes through bin/argos-mcp (translation
+# shim); never silently expect the binary to read ARGOS_*.
+substr: XERJ_URL => ARGOS_URL
+substr: XERJ_AUTH => ARGOS_AUTH
+substr: XERJ_API_KEY => ARGOS_API_KEY
+substr: XERJ_API => ARGOS_API
+
+# ---- data / config / identity ----------------------------------------------
+substr: .xerj-data => .argos-data
+substr: .xerj-data/ => .argos-data/
+substr: /home/toxic/.xerj-data => /home/toxic/.argos-data
+substr: xerj.org => argos.io
+substr: hub.xerj.org => hub.argos.io
+substr: XERJ_DISABLE_FEEDBACK => ARGOS_DISABLE_FEEDBACK
+
+# ---- MCP tool names ---------------------------------------------------------
+# The vendored engine advertises these; they surface through the gateway as
+# argos:xerj_*. The fork-rename goal flips the engine side to argos_*.
+substr: xerj_search => argos_search
+substr: xerj_semantic_search => argos_semantic_search
+substr: xerj_vector_search => argos_vector_search
+substr: xerj_hybrid_search => argos_hybrid_search
+substr: xerj_memory_store => argos_memory_store
+substr: xerj_memory_recall => argos_memory_recall
+substr: xerj_brain_overview => argos_brain_overview
+substr: xerj_brain_ego => argos_brain_ego
+substr: xerj_brain_link => argos_brain_link
+substr: xerj_brain_unlink => argos_brain_unlink
+substr: xerj_plan => argos_plan
+substr: xerj_def => argos_def
+substr: xerj_map => argos_map
+substr: xerj_code_search => argos_code_search
+substr: xerj_index_budget => argos_index_budget
+substr: xerj_autoindex_remove => argos_autoindex_remove
+substr: xerj_status => argos_status
+substr: xerj_batch_search => argos_batch_search
+substr: xerj_corpus_feedback => argos_corpus_feedback
+substr: xerj_field_report => argos_field_report
+substr: xerj_hub_find => argos_hub_find
+substr: xerj_hub_def => argos_hub_def
+substr: xerj_hub_ask => argos_hub_ask
+
+# ---- do NOT touch: these are OTHER things ----------------------------------
+# The engine remains functionally xerj under the hood until fork-rename lands:
+# upstream crate names, the binary's own --xerj-* CLI flags, and the field
+# report endpoint stays on xerj.org (upstream still serves it).
+exclude: xerj-server
+exclude: xerj-common
+exclude: xerj-storage
+exclude: xerj-fts
+exclude: xerj-vector
+exclude: xerj-logs
+exclude: xerj-query
+exclude: xerj-rerank
+exclude: xerj-api
+exclude: xerj-ai
+exclude: xerj-compress
+exclude: xerj-engine
+exclude: xerj-mcp
+exclude: xerj-wasm
+exclude: xerj-cluster
+exclude: xerj-console-api
+exclude: xerj-autoindex
+exclude: github.com/xerj-org
