@@ -607,6 +607,28 @@ export function listTrackedFiles(repo: string): string[] {
 	return execFileSync("git", ["ls-files", "-z"], { cwd: repo, maxBuffer: 1 << 28 }).toString().split("\0").filter(Boolean);
 }
 
+/**
+ * Include untracked files (git ls-files --others) so dotfiles and hidden
+ * entries that are NOT tracked — e.g. a gitignored runtime data dir like
+ * `~/.hodos-data` — are still scanned by rename rules. `--exclude-standard`
+ * keeps gitignored build artifacts out; hidden files are NOT excluded because
+ * dotfile renames (`.hodos` → `.rhodochrosite`) are exactly the case a
+ * tracked-only walk misses.
+ */
+export function listAllFiles(repo: string): string[] {
+	const tracked = listTrackedFiles(repo);
+	const untracked = execFileSync("git", ["ls-files", "-z", "--others", "--exclude-standard"], {
+		cwd: repo,
+		maxBuffer: 1 << 28,
+	})
+		.toString()
+		.split("\0")
+		.filter(Boolean);
+	const seen = new Set(tracked);
+	for (const f of untracked) if (!seen.has(f)) tracked.push(f);
+	return tracked;
+}
+
 export function isSymlink(repo: string, rel: string): boolean {
 	try { return fs.lstatSync(path.join(repo, rel)).isSymbolicLink(); } catch { return false; }
 }
@@ -783,7 +805,7 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 		return;
 	}
 
-	for (const rel of listTrackedFiles(repo)) {
+	for (const rel of listAllFiles(repo)) {
 		if (isSymlink(repo, rel)) continue;
 		const full = path.join(repo, rel);
 		let content: string;
