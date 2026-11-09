@@ -1,0 +1,31 @@
+# Move tau products from ranch/ to olympus/ pen
+# Run after: mv pens/ranch/products/tau-verify pens/olympus/products/
+#            mv pens/ranch/tau/tau-marketplace pens/olympus/products/
+
+extends: []
+
+includePaths: ["**"]
+ignorePaths: ["**/node_modules/**", "**/dist/**", "**/.git/**", "**/build/**"]
+
+# Path references to update
+rules:
+  - substr: "ranch/products/tau-verify" => "olympus/products/tau-verify"
+  - substr: "ranch/tau/tau-marketplace" => "olympus/products/tau-marketplace"
+  - substr: "/ranch/products/tau-verify/" => "/olympus/products/tau-verify/"
+  - substr: "/ranch/tau/tau-marketplace/" => "/olympus/products/tau-marketplace/"
+  - substr: "ranch/products/tau-verify/" => "olympus/products/tau-verify/"
+  - substr: "ranch/tau/tau-marketplace/" => "olympus/products/tau-marketplace/"
+
+# Hidden/dot files and directories
+  - substr: ".ranch/products/tau-verify" => ".olympus/products/tau-verify"
+  - substr: ".ranch/tau/tau-marketplace" => ".olympus/products/tau-marketplace"
+  - substr: "/.ranch/products/tau-verify/" => "/.olympus/products/tau-verify/"
+  - substr: "/.ranch/tau/tau-marketplace/" => "/.olympus/products/tau-marketplace/"
+
+# Case-preserving for any camelCase/PascalCase references
+  - case: "ranchProductsTauVerify" => "olympusProductsTauVerify"
+  - case: "ranchTauMarketplace" => "olympusProductsTauMarketplace"
+
+# Config/env references
+  - substr: "TAU_VERIFY_RANCH" => "TAU_VERIFY_OLYMPUS"
+  - substr: "TAU_MARKETPLACE_RANCH" => "TAU_MARKETPLACE_OLYMPUS"

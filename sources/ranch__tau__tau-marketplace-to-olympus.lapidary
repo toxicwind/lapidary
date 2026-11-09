@@ -1,0 +1,23 @@
+# Move tau-marketplace from ranch/tau/ to olympus/products/
+# Run after: mv pens/ranch/tau/tau-marketplace pens/olympus/products/
+
+extends: []
+
+includePaths: ["**"]
+ignorePaths: ["**/node_modules/**", "**/dist/**", "**/.git/**", "**/build/**"]
+
+# Path references to update
+rules:
+  - substr: "ranch/tau/tau-marketplace" => "olympus/products/tau-marketplace"
+  - substr: "/ranch/tau/tau-marketplace/" => "/olympus/products/tau-marketplace/"
+  - substr: "ranch/tau/tau-marketplace/" => "olympus/products/tau-marketplace/"
+
+# Hidden/dot files and directories
+  - substr: ".ranch/tau/tau-marketplace" => ".olympus/products/tau-marketplace"
+  - substr: "/.ranch/tau/tau-marketplace/" => "/.olympus/products/tau-marketplace/"
+
+# Case-preserving for any camelCase/PascalCase references
+  - case: "ranchTauMarketplace" => "olympusProductsTauMarketplace"
+
+# Config/env references
+  - substr: "TAU_MARKETPLACE_RANCH" => "TAU_MARKETPLACE_OLYMPUS"

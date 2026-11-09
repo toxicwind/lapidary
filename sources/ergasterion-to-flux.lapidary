@@ -1,0 +1,10 @@
+# ergasterion -> flux pen retirement pairs
+word: ergasterion => flux
+word: Ergasterion => Flux
+word: ERGASTERION => FLUX
+
+substr: pens/ergasterion => pens/flux
+substr: pens/ergasterion/ => pens/flux/
+substr: /pens/ergasterion => /pens/flux
+substr: .ergasterion => .flux
+substr: "ergasterion" => "flux"

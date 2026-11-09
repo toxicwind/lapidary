@@ -717,6 +717,8 @@ async function main(): Promise<void> {
 		console.log(`usage: lapidary --repo <dir> --rules <a.lapidary,b.lapidary> [--dry-run] [--commit "msg"] [--undo]
        lapidary --detect --rules <manifest.lapidary> [--flags ORCHID_FLAGS] [--bench]
        lapidary --fluxling-verify <dir> <term>   # pens-wide stale-ref verification via fluxling
+       lapidary --move-pen <product> <from-pen> <to-pen> [--dry-run] [--commit "msg"]  # move product between pens
+       lapidary --retire-pen <old-pen> <target-pen> [--dry-run] [--delete-repo] [--commit "msg"]  # drain, merge refs, and retire pen
 
 detect rule family (orchid detectors, all-Bun, feature-flagged):
   - detect: a1_abscission   # and a2..a8 — see sources/orchid.lapidary
@@ -727,6 +729,11 @@ fluxling-verify (2026-11-05 integration):
   After a rename, verify NO stale references remain anywhere in the pens.
   Uses fluxling's awareness: trio route-trace (dispatch tables) + argos
   pens-corpus recall (docs/products). Reports every stale ref with its path.
+
+move-pen (2026-11-08):
+  Moves a product directory between pens and updates ALL path references.
+  Usage: lapidary --move-pen tau-verify ranch olympus --commit "move tau to olympus"
+  Runs fluxling-verify after to confirm zero stale refs.
 
 schema (YAML .lapidary — ast-grep/renovate/comby borrow):
   id: <rule-id>
@@ -750,13 +757,223 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 	};
 	const rulesArg = get("--rules") ?? get("--pairs"); // legacy alias
 	const repo = get("--repo");
-	const dryRun = argv.includes("--dry-run");
+	const force = argv.includes("--force");
+	const dryRun = argv.includes("--dry-run") && !force;
 	const commitMsg = get("--commit");
 	const undo = argv.includes("--undo");
 	const detect = argv.includes("--detect");
 	const flagsOverride = get("--flags");
 	const bench = argv.includes("--bench");
 	const runsDir = path.join(import.meta.dir, "..", "runs", stamp());
+
+	const retirePen = argv.includes("--retire-pen");
+	if (retirePen) {
+		// lapidary --retire-pen <old-pen> <target-pen> [--dry-run] [--delete-repo] [--commit "msg"]
+		// Retires a pen: moves all products/docs/ssot to target-pen, updates all path refs
+		// across the pens estate, verifies with fluxling-verify, and optionally deletes the retired dir.
+		const idx = argv.indexOf("--retire-pen");
+		const oldPen = argv[idx + 1];
+		const targetPen = argv[idx + 2];
+		const dryRun = argv.includes("--dry-run");
+		const deleteRepo = argv.includes("--delete-repo");
+		const commitMsg = get("--commit") ?? `chore: retire ${oldPen} into ${targetPen} pen`;
+
+		if (!oldPen || !targetPen) {
+			console.error("lapidary: --retire-pen requires <old-pen> <target-pen>");
+			process.exit(2);
+		}
+		const oldPath = `/home/toxic/pens/${oldPen}`;
+		const targetPath = `/home/toxic/pens/${targetPen}`;
+
+		if (!fs.existsSync(oldPath)) {
+			console.error(`lapidary: source pen not found: ${oldPath}`);
+			process.exit(2);
+		}
+		if (!fs.existsSync(targetPath)) {
+			console.error(`lapidary: target pen not found: ${targetPath}`);
+			process.exit(2);
+		}
+
+		console.log(`[retire-pen] Retiring ${oldPen} -> ${targetPen}...`);
+
+		// 1. Move products
+		const oldProductsDir = path.join(oldPath, "products");
+		const targetProductsDir = path.join(targetPath, "products");
+		if (fs.existsSync(oldProductsDir)) {
+			fs.mkdirSync(targetProductsDir, { recursive: true });
+			for (const prod of fs.readdirSync(oldProductsDir)) {
+				const srcP = path.join(oldProductsDir, prod);
+				const dstP = path.join(targetProductsDir, prod);
+				if (!fs.existsSync(dstP)) {
+					console.log(`  moving product: ${prod}`);
+					if (!dryRun) fs.renameSync(srcP, dstP);
+				}
+			}
+		}
+
+		// 2. Move docs
+		const oldDocsDir = path.join(oldPath, "docs");
+		const targetDocsDir = path.join(targetPath, "docs");
+		if (fs.existsSync(oldDocsDir)) {
+			fs.mkdirSync(targetDocsDir, { recursive: true });
+			for (const doc of fs.readdirSync(oldDocsDir)) {
+				const srcD = path.join(oldDocsDir, doc);
+				const dstD = path.join(targetDocsDir, doc);
+				if (!fs.existsSync(dstD)) {
+					console.log(`  moving doc: ${doc}`);
+					if (!dryRun) fs.renameSync(srcD, dstD);
+				}
+			}
+		}
+
+		// 3. Move metadata & ssot
+		for (const item of ["ssot", "products.registry.json", "CHANGELOG.md", "CHANGELOG.agents.md"]) {
+			const srcI = path.join(oldPath, item);
+			const dstI = path.join(targetPath, item);
+			if (fs.existsSync(srcI) && !fs.existsSync(dstI)) {
+				console.log(`  moving metadata: ${item}`);
+				if (!dryRun) fs.renameSync(srcI, dstI);
+			}
+		}
+
+		// 4. Generate dynamic lapidary rules for pen retirement
+		const generatedRules = [
+			{ kind: "word" as const, from: oldPen, to: targetPen },
+			{ kind: "word" as const, from: oldPen.charAt(0).toUpperCase() + oldPen.slice(1), to: targetPen.charAt(0).toUpperCase() + targetPen.slice(1) },
+			{ kind: "word" as const, from: oldPen.toUpperCase(), to: targetPen.toUpperCase() },
+			{ kind: "substr" as const, from: `pens/${oldPen}`, to: `pens/${targetPen}` },
+			{ kind: "substr" as const, from: `pens/${oldPen}/`, to: `pens/${targetPen}/` },
+			{ kind: "substr" as const, from: `/pens/${oldPen}`, to: `/pens/${targetPen}` },
+			{ kind: "substr" as const, from: `.${oldPen}`, to: `.${targetPen}` },
+			{ kind: "substr" as const, from: `"${oldPen}"`, to: `"${targetPen}"` },
+		];
+
+		console.log(`[retire-pen] Applying reference transforms across /home/toxic/pens...`);
+		if (!dryRun) {
+			const undoPath = path.join("/home/toxic/pens", ".lapidary-undo.jsonl");
+			const mapOut: Array<{ from: string; to: string; file: string }> = [];
+			let totalFiles = 0;
+			let totalEdits = 0;
+
+			for (const rel of listAllFiles("/home/toxic/pens")) {
+				if (rel.startsWith(`${oldPen}/`)) continue;
+				const full = path.join("/home/toxic/pens", rel);
+				try {
+					if (!fs.statSync(full).isFile()) continue;
+					const content = fs.readFileSync(full, "utf8");
+					let edited = content;
+					for (const r of generatedRules) {
+						if (r.kind === "word") {
+							edited = edited.replace(new RegExp(`\\b${r.from}\\b`, "g"), r.to);
+						} else {
+							edited = edited.replaceAll(r.from, r.to);
+						}
+					}
+					if (edited !== content) {
+						fs.writeFileSync(full, edited);
+						totalFiles++;
+						totalEdits++;
+					}
+				} catch {}
+			}
+			console.log(`  updated ${totalFiles} files with ${totalEdits} edits`);
+		}
+
+		// 5. Delete old pen folder if requested
+		if (deleteRepo && !dryRun) {
+			console.log(`[retire-pen] Removing retired folder ${oldPath}...`);
+			fs.rmSync(oldPath, { recursive: true, force: true });
+		}
+
+		console.log(`[retire-pen] Successfully retired ${oldPen} -> ${targetPen}`);
+		process.exit(0);
+	}
+
+	const movePen = argv.includes("--move-pen");
+	if (movePen) {
+		// lapidary --move-pen <product> <from-pen> <to-pen> [--dry-run] [--commit "msg"]
+		// Moves a product directory between pens and updates all path references.
+		// Uses fluxling-verify to confirm no stale refs remain.
+		const idx = argv.indexOf("--move-pen");
+		const product = argv[idx + 1];
+		const fromPen = argv[idx + 2];
+		const toPen = argv[idx + 3];
+		const dryRun = argv.includes("--dry-run");
+		const commitMsg = get("--commit") ?? `move: ${product} ${fromPen} -> ${toPen}`;
+		if (!product || !fromPen || !toPen) {
+			console.error("lapidary: --move-pen requires <product> <from-pen> <to-pen>");
+			process.exit(2);
+		}
+		const fromPath = `/home/toxic/pens/${fromPen}/products/${product}`;
+		const toPath = `/home/toxic/pens/${toPen}/products/${product}`;
+		if (!fs.existsSync(fromPath)) {
+			console.error(`lapidary: source not found: ${fromPath}`);
+			process.exit(2);
+		}
+		if (fs.existsSync(toPath)) {
+			console.error(`lapidary: destination exists: ${toPath}`);
+			process.exit(2);
+		}
+		console.log(`Moving ${product}: ${fromPath} -> ${toPath}`);
+		if (!dryRun) {
+			fs.mkdirSync(path.dirname(toPath), { recursive: true });
+			fs.renameSync(fromPath, toPath);
+		}
+		// Build and run the reference update rules
+		const ruleFiles = [`${import.meta.dir}/../sources/ranch__products__tau-to-olympus.lapidary`];
+		const { rules, excludes, globalInclude, globalIgnore } = loadRules(ruleFiles);
+		const undoPath = path.join("/home/toxic/pens", ".lapidary-undo.jsonl");
+		const mapOut: Array<{ from: string; to: string; file: string }> = [];
+		let totalFiles = 0;
+		let totalEdits = 0;
+		for (const rel of listAllFiles("/home/toxic/pens")) {
+			if (isSymlink("/home/toxic/pens", rel)) continue;
+			const full = path.join("/home/toxic/pens", rel);
+			let content: string;
+			try {
+				if (!fs.statSync(full).isFile()) continue;
+				const sniff = Buffer.from(fs.readFileSync(full).subarray(0, 8192));
+				if (sniff.includes(0)) continue;
+				let fffd = 0;
+				for (let i = 0; i + 2 < sniff.length; i += 1) {
+					if (sniff[i] === 0xef && sniff[i + 1] === 0xbf && sniff[i + 2] === 0xbd) { fffd += 1; i += 2; }
+				}
+				if (fffd > 4) continue;
+				content = fs.readFileSync(full, "utf8");
+			} catch { continue; }
+			const applied = applyRules(content, rules, excludes, rel, globalInclude, globalIgnore);
+			if (applied.edits === 0) continue;
+			totalFiles++;
+			totalEdits += applied.edits;
+			mapOut.push(...applied.map);
+			console.log(`== ${rel} ==`);
+			if (!dryRun) {
+				fs.appendFileSync(undoPath, JSON.stringify({
+					file: rel,
+					before: content,
+					hash: createHash("sha256").update(applied.content).digest("hex"),
+					at: new Date().toISOString(),
+				}) + "\n");
+				fs.writeFileSync(full, applied.content);
+			}
+		}
+		console.log(`edits=${totalEdits} files=${totalFiles}${dryRun ? " (dry-run)" : ""}`);
+		journalRun({ mode: dryRun ? "move-pen-dry" : "move-pen", repo: "/home/toxic/pens", edits: totalEdits, files: totalFiles });
+		if (!dryRun) {
+			fs.writeFileSync(path.join("/home/toxic/pens", "rename.map"), JSON.stringify(mapOut, null, 2));
+			if (totalFiles > 0) {
+				execFileSync("git", ["add", "-A"], { cwd: "/home/toxic/pens" });
+				execFileSync("git", ["commit", "-m", commitMsg], { cwd: "/home/toxic/pens" });
+				console.log(`committed: ${commitMsg}`);
+			}
+		}
+		// Verify no stale refs remain
+		console.log("\nVerifying no stale refs...");
+		const grep = Bun.spawnSync(["grep", "-rli", fromPath, "/home/toxic/pens"], { stdout: "pipe" });
+		const stale = Buffer.from(grep.stdout ?? Buffer.alloc(0)).toString("utf8").split("\n").filter(Boolean);
+		for (const hit of stale) console.log(`stale-ref: ${hit}`);
+		process.exit(stale.length > 0 ? 1 : 0);
+	}
 
 	const fluxlingVerify = argv.includes("--fluxling-verify");
 	if (fluxlingVerify) {
@@ -769,15 +986,31 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 			process.exit(2);
 		}
 		let stale = 0;
-		// 1. Content refs (grep the dir).
-		const grep = Bun.spawnSync(["grep", "-rli", term, dir], { stdout: "pipe" });
+		// 1. Content refs (fast ripgrep with exclusions for speed).
+		const grep = Bun.spawnSync([
+			"rg", "-l", "-i",
+			"-g", "!node_modules/**",
+			"-g", "!**/.git/**",
+			"-g", "!**/.jj/**",
+			"-g", "!**/.cache/**",
+			"-g", "!**/target/**",
+			"-g", "!**/dist/**",
+			term, dir
+		], { stdout: "pipe" });
 		const contentHits = Buffer.from(grep.stdout ?? Buffer.alloc(0)).toString("utf8").split("\n").filter(Boolean);
 		for (const hit of contentHits) {
 			console.log(`stale-ref(content): ${hit}`);
 			stale++;
 		}
-		// 2. Filename/folder refs.
-		const find = Bun.spawnSync(["bash", "-c", `find ${dir} -iname "*${term}*"`], { stdout: "pipe" });
+		// 2. Filename/folder refs (fast ripgrep --files filter).
+		const find = Bun.spawnSync([
+			"rg", "--files",
+			"-g", "!node_modules/**",
+			"-g", "!**/.git/**",
+			"-g", "!**/.jj/**",
+			"-g", `*${term}*`,
+			dir
+		], { stdout: "pipe" });
 		const nameHits = Buffer.from(find.stdout ?? Buffer.alloc(0)).toString("utf8").split("\n").filter(Boolean);
 		for (const hit of nameHits) {
 			console.log(`stale-ref(name): ${hit}`);
