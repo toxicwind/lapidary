@@ -36,6 +36,47 @@ import type { Ctx, Finding } from "../detectors/_shared.ts";
 import { makeDoorbell, resolveCorpus, resolveFlags } from "../detectors/_shared.ts";
 import { loadDetector } from "../detectors/registry.ts";
 
+
+export interface WalkConfig {
+	dots: boolean;
+	hidden: boolean;
+	parent: boolean;
+	parent_dir: string;
+}
+
+function loadEnvDefaults(): WalkConfig {
+	const envFile = path.join(import.meta.dir, "..", ".env");
+	let envDots = process.env.LAPIDARY_DOTS;
+	let envHidden = process.env.LAPIDARY_HIDDEN;
+	let envParent = process.env.LAPIDARY_PARENT;
+	let envParentDir = process.env.LAPIDARY_PARENT_DIR;
+
+	if (fs.existsSync(envFile)) {
+		try {
+			const content = fs.readFileSync(envFile, "utf8");
+			for (const line of content.split("\n")) {
+				const trimmed = line.trim();
+				if (!trimmed || trimmed.startsWith("#")) continue;
+				const [k, ...rest] = trimmed.split("=");
+				const v = rest.join("=").trim().replace(/^['"]|['"]$/g, "");
+				if (k === "LAPIDARY_DOTS" && envDots === undefined) envDots = v;
+				if (k === "LAPIDARY_HIDDEN" && envHidden === undefined) envHidden = v;
+				if (k === "LAPIDARY_PARENT" && envParent === undefined) envParent = v;
+				if (k === "LAPIDARY_PARENT_DIR" && envParentDir === undefined) envParentDir = v;
+			}
+		} catch {}
+	}
+
+	return {
+		dots: envDots !== undefined ? envDots === "true" || envDots === "1" : true,
+		hidden: envHidden !== undefined ? envHidden === "true" || envHidden === "1" : true,
+		parent: envParent !== undefined ? envParent === "true" || envParent === "1" : true,
+		parent_dir: envParentDir || "/home/toxic/",
+	};
+}
+
+export const defaultWalkConfig: WalkConfig = loadEnvDefaults();
+
 export interface Rule {
 	id: string;
 	kind: "word" | "substr" | "regex" | "case" | "comby" | "detect";
@@ -646,19 +687,34 @@ export function listTrackedFiles(repo: string): string[] {
  * returns forward-slash relative paths sorted for determinism; the caller's
  * binary-sniff guard rejects non-UTF-8 content later.
  */
-export function walkFiles(repo: string): string[] {
+export function walkFiles(repo: string, cfg: WalkConfig = defaultWalkConfig): string[] {
 	const out: string[] = [];
-	const stack: string[] = [""];
-	while (stack.length) {
-		const rel = stack.pop()!;
-		const abs = path.join(repo, rel);
-		let entries: fs.Dirent[];
-		try { entries = fs.readdirSync(abs, { withFileTypes: true }); } catch { continue; }
-		for (const e of entries) {
-			if (e.name === ".git") continue;
-			const relChild = rel ? `${rel}/${e.name}` : e.name;
-			if (e.isDirectory()) stack.push(relChild);
-			else if (e.isFile()) out.push(relChild);
+	const roots = [repo];
+	if (cfg.parent && cfg.parent_dir && fs.existsSync(cfg.parent_dir) && cfg.parent_dir !== repo) {
+		roots.push(cfg.parent_dir);
+	}
+
+	for (const base of roots) {
+		const stack: string[] = [""];
+		while (stack.length) {
+			const rel = stack.pop()!;
+			const abs = path.join(base, rel);
+			let entries: fs.Dirent[];
+			try { entries = fs.readdirSync(abs, { withFileTypes: true }); } catch { continue; }
+			for (const e of entries) {
+				if (e.name === ".git") continue;
+				// hidden / dotfiles filter
+				const isDot = e.name.startsWith(".");
+				if (isDot && (!cfg.dots || !cfg.hidden)) continue;
+
+				const relChild = rel ? `${rel}/${e.name}` : e.name;
+				if (e.isDirectory()) {
+					if (e.name === "node_modules") continue;
+					stack.push(relChild);
+				} else if (e.isFile()) {
+					out.push(base === repo ? relChild : path.join(base, relChild));
+				}
+			}
 		}
 	}
 	return out.sort();

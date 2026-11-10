@@ -1,0 +1,29 @@
+{
+  "name": "lapidary",
+  "version": "1.0.0",
+  "description": "geode's transform + detect engine (all-Bun)",
+  "module": "sources/index.ts",
+  "type": "module",
+  "bin": {
+    "lapidary": "bin/lapidary.ts"
+  },
+  "scripts": {
+    "dev": "bun --hot run bin/lapidary.ts",
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit -p tsconfig.json",
+    "lint": "biome check .",
+    "fmt": "biome format --write .",
+    "build": "bun build bin/lapidary.ts --outdir dist"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "latest",
+    "bun-types": "latest",
+    "typescript": "^5.5.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {},
+  "private": true
+}
