@@ -1,0 +1,19 @@
+{
+  "name": "experimental",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "bun check"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
+  "dependencies": {
+    "@ast-grep/napi": "^0.51.2",
+    "ts-morph": "^28.0.0"
+  }
+}

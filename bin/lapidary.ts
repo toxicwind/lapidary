@@ -761,6 +761,61 @@ export function isSymlink(repo: string, rel: string): boolean {
 	try { return fs.lstatSync(path.join(repo, rel)).isSymbolicLink(); } catch { return false; }
 }
 
+/**
+ * Pens-wide file walk. Unlike listAllFiles (git ls-files of ONE repo), this
+ * walks the filesystem so NESTED repos are included — git ls-files at the
+ * parent only sees the parent's own tracked files, silently skipping every
+ * nested repo, which is exactly how tree-wide renames left ghosts behind.
+ * Prunes the same dirs as the estate search doctrine.
+ */
+const PENS_PRUNE = new Set([
+	"node_modules", ".git", ".jj", "target", "dist", "build", ".cache",
+	".npm", "installs", "blobs", "sessions", "cache", "__pycache__",
+	".venv", "venv", "runs", ".consolidate-backup-20261106",
+]);
+export function walkPens(root = "/home/toxic/pens"): string[] {
+	const out: string[] = [];
+	const stack: string[] = [""];
+	while (stack.length) {
+		const rel = stack.pop()!;
+		const abs = path.join(root, rel);
+		let entries: fs.Dirent[];
+		try { entries = fs.readdirSync(abs, { withFileTypes: true }); } catch { continue; }
+		for (const e of entries) {
+			if (PENS_PRUNE.has(e.name)) continue;
+			const relChild = rel ? `${rel}/${e.name}` : e.name;
+			if (e.isDirectory()) stack.push(relChild);
+			else if (e.isFile()) out.push(relChild);
+		}
+	}
+	return out.sort();
+}
+
+/** Read a file as UTF-8 only when it is not binary (NUL / U+FFFD-heavy sniff). */
+export function readTextIfSafe(full: string): string | null {
+	try {
+		if (!fs.statSync(full).isFile()) return null;
+		const sniff = Buffer.from(fs.readFileSync(full).subarray(0, 8192));
+		if (sniff.includes(0)) return null;
+		let fffd = 0;
+		for (let i = 0; i + 2 < sniff.length; i += 1) {
+			if (sniff[i] === 0xef && sniff[i + 1] === 0xbf && sniff[i + 2] === 0xbd) { fffd += 1; i += 2; }
+		}
+		if (fffd > 4) return null;
+		return fs.readFileSync(full, "utf8");
+	} catch { return null; }
+}
+
+/** Journal one reversible write to the undo ledger. */
+export function journalWrite(undoPath: string, rel: string, before: string, after: string): void {
+	fs.appendFileSync(undoPath, JSON.stringify({
+		file: rel,
+		before,
+		hash: createHash("sha256").update(after).digest("hex"),
+		at: new Date().toISOString(),
+	}) + "\n");
+}
+
 // ---------------------------------------------------------------------------
 // CLI
 // ---------------------------------------------------------------------------
@@ -911,27 +966,29 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 			let totalFiles = 0;
 			let totalEdits = 0;
 
-			for (const rel of listAllFiles("/home/toxic/pens")) {
+			for (const rel of walkPens("/home/toxic/pens")) {
 				if (rel.startsWith(`${oldPen}/`)) continue;
 				const full = path.join("/home/toxic/pens", rel);
-				try {
-					if (!fs.statSync(full).isFile()) continue;
-					const content = fs.readFileSync(full, "utf8");
-					let edited = content;
-					for (const r of generatedRules) {
-						if (r.kind === "word") {
-							edited = edited.replace(new RegExp(`\\b${r.from}\\b`, "g"), r.to);
-						} else {
-							edited = edited.replaceAll(r.from, r.to);
-						}
+				const content = readTextIfSafe(full);
+				if (content === null) continue;
+				let edited = content;
+				for (const r of generatedRules) {
+					if (r.kind === "word") {
+						edited = edited.replace(new RegExp(`\\b${r.from}\\b`, "g"), r.to);
+					} else {
+						edited = edited.replaceAll(r.from, r.to);
 					}
-					if (edited !== content) {
-						fs.writeFileSync(full, edited);
-						totalFiles++;
-						totalEdits++;
-					}
-				} catch {}
+				}
+				if (edited !== content) {
+					totalFiles++;
+					totalEdits++;
+					mapOut.push({ from: oldPen, to: targetPen, file: rel });
+					console.log(`== ${rel} ==`);
+					journalWrite(undoPath, rel, content, edited);
+					fs.writeFileSync(full, edited);
+				}
 			}
+			fs.writeFileSync(path.join("/home/toxic/pens", "rename.map"), JSON.stringify(mapOut, null, 2));
 			console.log(`  updated ${totalFiles} files with ${totalEdits} edits`);
 		}
 
@@ -975,60 +1032,67 @@ emits: rename.map + .lapidary-undo.jsonl (reversible via --undo)`);
 			fs.mkdirSync(path.dirname(toPath), { recursive: true });
 			fs.renameSync(fromPath, toPath);
 		}
-		// Build and run the reference update rules
-		const ruleFiles = [`${import.meta.dir}/../sources/ranch__products__tau-to-olympus.lapidary`];
-		const { rules, excludes, globalInclude, globalIgnore } = loadRules(ruleFiles);
+		// Build the reference-update rules from the ACTUAL args (not a
+		// hardcoded tau→olympus file — the old code applied the wrong rename
+		// for every other product/pens pair, leaving ghosts behind).
+		const generatedRules: Array<{ kind: "word" | "substr"; from: string; to: string }> = [
+			{ kind: "word", from: product, to: product },
+			{ kind: "word", from: product.charAt(0).toUpperCase() + product.slice(1), to: product.charAt(0).toUpperCase() + product.slice(1) },
+			{ kind: "word", from: product.toUpperCase(), to: product.toUpperCase() },
+			{ kind: "substr", from: `pens/${fromPen}/products/${product}`, to: `pens/${toPen}/products/${product}` },
+			{ kind: "substr", from: `pens/${fromPen}/products/${product}/`, to: `pens/${toPen}/products/${product}/` },
+			{ kind: "substr", from: `/${fromPen}/products/${product}`, to: `/${toPen}/products/${product}` },
+			{ kind: "substr", from: `"${fromPen}/products/${product}"`, to: `"${toPen}/products/${product}"` },
+		];
 		const undoPath = path.join("/home/toxic/pens", ".lapidary-undo.jsonl");
 		const mapOut: Array<{ from: string; to: string; file: string }> = [];
 		let totalFiles = 0;
 		let totalEdits = 0;
-		for (const rel of listAllFiles("/home/toxic/pens")) {
-			if (isSymlink("/home/toxic/pens", rel)) continue;
+		for (const rel of walkPens("/home/toxic/pens")) {
+			if (rel.startsWith(`${toPen}/products/${product}/`)) continue;
 			const full = path.join("/home/toxic/pens", rel);
-			let content: string;
-			try {
-				if (!fs.statSync(full).isFile()) continue;
-				const sniff = Buffer.from(fs.readFileSync(full).subarray(0, 8192));
-				if (sniff.includes(0)) continue;
-				let fffd = 0;
-				for (let i = 0; i + 2 < sniff.length; i += 1) {
-					if (sniff[i] === 0xef && sniff[i + 1] === 0xbf && sniff[i + 2] === 0xbd) { fffd += 1; i += 2; }
+			const content = readTextIfSafe(full);
+			if (content === null) continue;
+			let edited = content;
+			let fileEdits = 0;
+			for (const r of generatedRules) {
+				if (r.kind === "word") {
+					edited = edited.replace(new RegExp(`\\b${r.from}\\b`, "g"), r.to);
+				} else {
+					edited = edited.replaceAll(r.from, r.to);
 				}
-				if (fffd > 4) continue;
-				content = fs.readFileSync(full, "utf8");
-			} catch { continue; }
-			const applied = applyRules(content, rules, excludes, rel, globalInclude, globalIgnore);
-			if (applied.edits === 0) continue;
-			totalFiles++;
-			totalEdits += applied.edits;
-			mapOut.push(...applied.map);
-			console.log(`== ${rel} ==`);
-			if (!dryRun) {
-				fs.appendFileSync(undoPath, JSON.stringify({
-					file: rel,
-					before: content,
-					hash: createHash("sha256").update(applied.content).digest("hex"),
-					at: new Date().toISOString(),
-				}) + "\n");
-				fs.writeFileSync(full, applied.content);
+			}
+			if (edited !== content) {
+				totalFiles++;
+				mapOut.push({ from: fromPath, to: toPath, file: rel });
+				console.log(`== ${rel} ==`);
+				if (!dryRun) {
+					journalWrite(undoPath, rel, content, edited);
+					fs.writeFileSync(full, edited);
+				}
 			}
 		}
-		console.log(`edits=${totalEdits} files=${totalFiles}${dryRun ? " (dry-run)" : ""}`);
-		journalRun({ mode: dryRun ? "move-pen-dry" : "move-pen", repo: "/home/toxic/pens", edits: totalEdits, files: totalFiles });
+		console.log(`edits=${totalFiles} files=${totalFiles}${dryRun ? " (dry-run)" : ""}`);
+		journalRun({ mode: dryRun ? "move-pen-dry" : "move-pen", repo: "/home/toxic/pens", edits: totalFiles, files: totalFiles });
 		if (!dryRun) {
 			fs.writeFileSync(path.join("/home/toxic/pens", "rename.map"), JSON.stringify(mapOut, null, 2));
-			if (totalFiles > 0) {
-				execFileSync("git", ["add", "-A"], { cwd: "/home/toxic/pens" });
-				execFileSync("git", ["commit", "-m", commitMsg], { cwd: "/home/toxic/pens" });
-				console.log(`committed: ${commitMsg}`);
-			}
 		}
-		// Verify no stale refs remain
+		// Verify no stale refs remain (pens-relative refs, not absolute paths)
 		console.log("\nVerifying no stale refs...");
-		const grep = Bun.spawnSync(["grep", "-rli", fromPath, "/home/toxic/pens"], { stdout: "pipe" });
-		const stale = Buffer.from(grep.stdout ?? Buffer.alloc(0)).toString("utf8").split("\n").filter(Boolean);
-		for (const hit of stale) console.log(`stale-ref: ${hit}`);
-		process.exit(stale.length > 0 ? 1 : 0);
+		const staleTerms = [`pens/${fromPen}/products/${product}`, `${fromPen}/products/${product}`];
+		let stale = 0;
+		for (const term of staleTerms) {
+			const grep = Bun.spawnSync([
+				"rg", "-l", "-i",
+				"-g", "!node_modules/**", "-g", "!**/.git/**", "-g", "!**/.jj/**",
+				"-g", "!**/.cache/**", "-g", "!**/target/**", "-g", "!**/dist/**",
+				"-g", "!**/installs/**", "-g", "!**/blobs/**", "-g", "!**/sessions/**",
+				term, "/home/toxic/pens"
+			], { stdout: "pipe" });
+			const hits = Buffer.from(grep.stdout ?? Buffer.alloc(0)).toString("utf8").split("\n").filter(Boolean);
+			for (const hit of hits) { console.log(`stale-ref: ${hit}`); stale++; }
+		}
+		process.exit(stale > 0 ? 1 : 0);
 	}
 
 	const fluxlingVerify = argv.includes("--fluxling-verify");
