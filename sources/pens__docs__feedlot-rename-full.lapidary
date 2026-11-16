@@ -1,0 +1,60 @@
+# Feedlot rename pairs - full estate rebrand byte-vision -> feedlot
+# substr: OLD => NEW (substring, distinctive tokens)
+# word:   OLD => NEW (whole word \bOLD\b)
+# prefix: OLD => NEW (word prefix \bOLD)
+
+# Core identity
+word:   byte-vision => feedlot
+word:   byte_vision => feedlot
+word:   BYTE_VISION => FEEDLOT
+word:   ByteVision => Feedlot
+word:   BYTE-VISION => FEEDLOT
+word:   bytevision => feedlot
+word:   BYTEVISION => FEEDLOT
+
+# Daemon name in pitchfork.toml
+word:   estate/byte-vision => estate/feedlot
+word:   byte-vision => feedlot
+
+# Port variables in ports.env
+word:   BYTE_VISION_PORT => FEEDLOT_PORT
+word:   BYTE_VISION_MCP_INTERNAL_PORT => FEEDLOT_MCP_INTERNAL_PORT
+
+# Service script
+word:   byte-vision.sh => feedlot.sh
+word:   stack/services/byte-vision.sh => stack/services/feedlot.sh
+
+# Config files
+word:   byte-vision-cfg.env => feedlot-cfg.env
+word:   example-byte-vision-cfg.env => example-feedlot-cfg.env
+word:   .config/byte-vision => .config/feedlot
+
+# Binary name
+word:   byte-vision-mcp => feedlot-mcp
+
+# Package/module names
+word:   byte-vision-mcp-priv => feedlot-mcp
+word:   byte_vision_mcp_priv => feedlot_mcp
+
+# Config directory path
+substr: /byte-vision/ => /feedlot/
+substr: .config/byte-vision => .config/feedlot
+
+# URLs and paths
+substr: byte-vision-mcp-priv => feedlot-mcp
+substr: byte-vision-mcp => feedlot-mcp
+
+# Project entries
+word:   byte-vision-mcp => feedlot-mcp
+word:   byte-vision-mcp-priv => feedlot-mcp
+
+# Daemon in docs
+word:   byte-vision => feedlot
+
+# Internal port comment references
+substr: byte-vision-mcp => feedlot-mcp
+substr: byte-vision => feedlot
+
+# Exclude: these are real tokens that should NOT be renamed
+exclude: BYTEVISION
+exclude: bytevision

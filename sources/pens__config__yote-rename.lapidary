@@ -1,0 +1,15 @@
+# rename-roundup pairs for yote-relay (25102) and yote-core (25143)
+# Port 25102: yote messaging gateway -> yote-relay
+# Port 25143: coyote autonomous agent loop -> yote-core
+
+word: YOTE_PORT => YOTE_RELAY_PORT
+word: COYOTE_PORT => YOTE_CORE_PORT
+
+word: coyote-loop => yote-core
+word: coyote_loop => yote_core
+word: coyote => yote-core
+word: Coyote => YoteCore
+word: COYOTE => YOTE_CORE
+
+word: yote-message => yote-relay
+word: yote_message => yote_relay

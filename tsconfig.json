@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["bun"],
+    "target": "esnext"
+  },
+  "include": [
+    "bin/**/*.ts",
+    "src/**/*.ts",
+    "sources/**/*.ts",
+    "detectors/**/*.ts",
+    "*.ts"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "dist/**"
+  ]
+}

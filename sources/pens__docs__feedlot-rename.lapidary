@@ -1,0 +1,40 @@
+# Feedlot rename pairs - byte-vision-mcp-priv -> feedlot-mcp
+# substr: OLD => NEW (substring, distinctive tokens)
+# word:   OLD => NEW (whole word \bOLD\b)
+# prefix: OLD => NEW (word prefix \bOLD)
+
+# Repository/daemon identity
+word:   byte-vision => feedlot
+word:   byte_vision => feedlot
+word:   BYTE_VISION => FEEDLOT
+word:   ByteVision => Feedlot
+word:   BYTE-VISION => FEEDLOT
+
+# Daemon name in pitchfork
+word:   estate/byte-vision => estate/feedlot
+word:   byte-vision.sh => feedlot.sh
+
+# Port variable
+word:   BYTE_VISION_PORT => FEEDLOT_PORT
+
+# Config file references
+word:   byte-vision-cfg.env => feedlot-cfg.env
+word:   example-byte-vision-cfg.env => example-feedlot-cfg.env
+
+# Binary name
+word:   byte-vision-mcp => feedlot-mcp
+
+# Config directory
+word:   .config/byte-vision => .config/feedlot
+
+# Package/module names
+word:   byte-vision-mcp-priv => feedlot-mcp
+word:   byte_vision_mcp_priv => feedlot_mcp
+
+# URLs and paths
+substr: byte-vision-mcp-priv => feedlot-mcp
+substr: byte-vision-mcp => feedlot-mcp
+
+# README/project title
+word:   "Byte Vision" => "Feedlot"
+word:   "byte vision" => "feedlot"

@@ -1,0 +1,10 @@
+# Case-preserving rename-roundup pairs for llama-swap -> bornite
+word: llama-swap => bornite
+word: llama_swap => bornite
+word: LlamaSwap => Bornite
+word: LLAMA_SWAP => BORNITE
+word: llama swap => bornite
+word: Llama Swap => Bornite
+
+# Exclude the pairs mapping file itself from renames/rewrites.
+exclude: llama-swap-to-bornite.pairs
