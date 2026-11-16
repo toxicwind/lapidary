@@ -88,7 +88,7 @@ describe("comby holes", () => {
 	test(":[[hole]] capture and reuse", () => {
 		const compiled = combyToRegex(":[[x]].pinax()", ":[[x]].mimetite()");
 		expect(compiled).not.toBeNull();
-		const out = "a.pinax(); b.pinax()".replace(compiled!.pattern, compiled!.replace);
+		const out = "a.pinax(); b.pinax()".replace(compiled!.pattern, compiled!.replace as (...args: any[]) => string);
 		expect(out).toBe("a.mimetite(); b.mimetite()");
 	});
 });

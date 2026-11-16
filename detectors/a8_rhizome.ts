@@ -58,7 +58,7 @@ export const a8_rhizome: Module = {
 
 		// ---- clonal symlink drift audit (read-only) ----
 		const clones: Record<string, string> = {};
-		for (const name of ["kite", "fledge", "hatch", "kite-cli-src", "estate"]) {
+		for (const name of ["kite", "fledge", "hatch", "kite-cli-src", "Pens"]) {
 			const p = path.join("/home/toxic", name);
 			if (fs.existsSync(p)) {
 				try { clones[name] = fs.realpathSync(p); } catch { clones[name] = "BROKEN_SYMLINK"; }

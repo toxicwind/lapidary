@@ -76,6 +76,6 @@ precision / per-anomaly latency.
 The biological framing ("orchid abscission") is the architect's whitepaper
 metaphor mapping epiphytic-orchid survival physiology (hydraulic segmentation,
 phloem autophagy, ABA gating, PCD velamen, mycorrhizal passage cells, rhizome
-clonal sharing) onto estate failure modes. The engineering is orthodox: bounded
+clonal sharing) onto Pens failure modes. The engineering is orthodox: bounded
 process isolation, in-memory hi-availability stores, wire identity witnesses,
 data-framed telemetry.

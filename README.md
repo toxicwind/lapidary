@@ -2,7 +2,7 @@
 
 `lapidary` cuts & polishes product names across a repo using `.lapidary` rule
 files — and, since the orchid merge (2026-10-31), also **detects** anomalies
-over the estate log corpus.
+over the Pens log corpus.
 
 ## Rename engine (transform rule family)
 

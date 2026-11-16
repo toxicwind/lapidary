@@ -4,7 +4,7 @@ import { now, grab } from "./_shared.ts";
 
 /** a9 — stolon: runaway runner detection (spawn-storm loops).
  *  A stolon is the runner a plant throws when it expands without investing in
- *  roots — cheap, fast, and lethal at scale. The estate equivalent: a loop
+ *  roots — cheap, fast, and lethal at scale. The Pens equivalent: a loop
  *  that spawns without pacing. Evidence classes, all seen live 2026-10-31:
  *    S1  spawnSync in a while(true) with a non-awaited Bun.sleep (the pace
  *        promise is discarded — loop re-enters immediately; 155 forks/s for 25h)

@@ -24,7 +24,7 @@ export interface ModuleResult {
 	detector: string;
 	enabled: boolean;
 	reason?: string;
-	latencyMs: number;
+	latencyMs?: number;
 	findings: Finding[];
 }
 
@@ -125,10 +125,6 @@ export function rel(root: string, p: string): string {
 	return path.relative(root, p);
 }
 
-
-import * as fs from "node:fs";
-import * as path from "node:path";
-
 const root = path.join(import.meta.dir, ".");
 const FLAGS_FILE = path.join(root, "orchid.flags.json");
 
@@ -213,10 +209,6 @@ function bioOf(id: string): string {
 	return bios[id] ?? id;
 }
 
-
-import * as fs from "node:fs";
-import * as path from "node:path";
-
 /** Whitepaper log corpus — real artifacts, resolved dynamically.
  *  Default root /tmp; override with ORCHID_CORPUS_DIR. */
 const NAMES: Array<[string, string]> = [
@@ -258,11 +250,8 @@ export function corpusSummary(c: Record<string, CorpusEntry>): { present: number
 	};
 }
 
-
-import * as fs from "node:fs";
 import * as net from "node:net";
 import * as os from "node:os";
-import * as path from "node:path";
 
 /** Dropbox-fast-socket-save over /tmp/ferret_doorbell.sock (AF_UNIX SOCK_STREAM,
  *  GIT_SYNC_DISPATCH framing) — the whitepaper's persistence transport.

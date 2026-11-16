@@ -46,10 +46,10 @@
   "substr: SOVEREIGN_PROFILE => ESTATE_PROFILE",
   "substr: SOVEREIGN_PROOF => ESTATE_PROOF",
   "substr: SOVEREIGN_ROOT => ESTATE_ROOT",
-  "substr: sovereign-chat => estate-chat",
-  "substr: sovereign-router => estate-router",
+  "substr: sovereign-chat => Pens-chat",
+  "substr: sovereign-router => Pens-router",
   "vendored/",
-  "word: sovereign => estate",
+  "word: sovereign => Pens",
   "~/Sovereign"
  ],
  "conflicts": 32,
@@ -57,37 +57,37 @@
   {
    "kind": "path",
    "old": "git mv docs/connector-bridge-routing-d4734168.md",
-   "new": "/home/toxic/pens/estate/hatch/docs",
+   "new": "/home/toxic/pens/Pens/hatch/docs",
    "source": "estate__REORG-MANIFEST.txt"
   },
   {
    "kind": "path",
    "old": "git mv docs/Meta/Muse AI/Jarvis/runtime-cell.md",
-   "new": "/home/toxic/pens/estate/hatch/docs",
+   "new": "/home/toxic/pens/Pens/hatch/docs",
    "source": "estate__REORG-MANIFEST.txt"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/projects/range/ranch/gear",
-   "new": "/home/toxic/pens/estate/config/gear",
+   "old": "/home/toxic/pens/Pens/projects/range/ranch/gear",
+   "new": "/home/toxic/pens/Pens/config/gear",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "path",
    "old": "git mv docs/ws-exec-8379-audit-20260914.md",
-   "new": "/home/toxic/pens/estate/hatch/docs",
+   "new": "/home/toxic/pens/Pens/hatch/docs",
    "source": "estate__REORG-MANIFEST.txt"
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/ranch/mesh/secretsmith",
+   "old": "/home/toxic/pens/Pens/ranch/mesh/secretsmith",
    "new": "${SKILLS_ROOT}/../kryptos/secretsmith",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "path",
    "old": "config/tau/agent/extensions/hashline-pi",
-   "new": "products/estate-orphans/tau-extensions",
+   "new": "products/Pens-orphans/tau-extensions",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
@@ -98,7 +98,7 @@
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/ranch/super-ralph",
+   "old": "/home/toxic/pens/Pens/ranch/super-ralph",
    "new": "RETIRED",
    "source": "canonical-cutover-20261028.pairs"
   },
@@ -116,7 +116,7 @@
   },
   {
    "kind": "substr",
-   "old": "estate/ranch/mesh/proxy/chalcopyrite",
+   "old": "Pens/ranch/mesh/proxy/chalcopyrite",
    "new": "pens/geode/products/chalcopyrite",
    "source": "geode__docs__chalcopyrite-rename.pairs"
   },
@@ -134,25 +134,25 @@
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/ranch/grasp-hub",
+   "old": "/home/toxic/pens/Pens/ranch/grasp-hub",
    "new": "/home/toxic/pens/geode/products/azurite",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/ranch/gatehouse",
+   "old": "/home/toxic/pens/Pens/ranch/gatehouse",
    "new": "RETIRED",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/azurite/skills",
+   "old": "/home/toxic/pens/Pens/azurite/skills",
    "new": "/home/toxic/pens/geode/products/azurite/skills",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/skills-hub-hub",
+   "old": "/home/toxic/pens/Pens/skills-hub-hub",
    "new": "/home/toxic/pens/geode/products/azurite",
    "source": "geode__products__azurite__rename.pairs"
   },
@@ -170,25 +170,25 @@
   },
   {
    "kind": "substr",
-   "old": "github.com/toxic/estate/skills/",
+   "old": "github.com/toxic/Pens/skills/",
    "new": "github.com/toxicwind/azurite/tree/main/skills/",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/ranch/roost",
+   "old": "/home/toxic/pens/Pens/ranch/roost",
    "new": "RETIRED",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/ranch/flock",
+   "old": "/home/toxic/pens/Pens/ranch/flock",
    "new": "RETIRED",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/ranch/shep",
+   "old": "/home/toxic/pens/Pens/ranch/shep",
    "new": "RETIRED",
    "source": "canonical-cutover-20261028.pairs"
   },
@@ -206,13 +206,13 @@
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/skills-hub",
+   "old": "/home/toxic/pens/Pens/skills-hub",
    "new": "/home/toxic/pens/geode/products/azurite/skills",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/grasp-hub",
+   "old": "/home/toxic/pens/Pens/grasp-hub",
    "new": "/home/toxic/pens/geode/products/azurite",
    "source": "canonical-cutover-20261028.pairs"
   },
@@ -236,8 +236,8 @@
   },
   {
    "kind": "path",
-   "old": "/home/toxic/estate-projects",
-   "new": "/home/toxic/pens/estate/products",
+   "old": "/home/toxic/pens/Pens-projects",
+   "new": "/home/toxic/pens/Pens/products",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
@@ -254,7 +254,7 @@
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/olympus",
+   "old": "/home/toxic/pens/Pens/olympus",
    "new": "/home/toxic/pens/olympus",
    "source": "estate__config__estate-ghost-path.pairs"
   },
@@ -266,19 +266,19 @@
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/skills/",
+   "old": "/home/toxic/pens/Pens/skills/",
    "new": "${SKILLS_ROOT}/",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "substr",
-   "old": "estate/skills/fast-browser",
+   "old": "Pens/skills/fast-browser",
    "new": "${SKILLS_ROOT}/fast-browser",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/skills",
+   "old": "/home/toxic/pens/Pens/skills",
    "new": "/home/toxic/pens/geode/products/azurite/skills",
    "source": "canonical-cutover-20261028.pairs"
   },
@@ -291,24 +291,24 @@
   {
    "kind": "path",
    "old": "mv /home/toxic/.fleet-bus",
-   "new": "/home/toxic/pens/estate/hatch/agents/ember",
+   "new": "/home/toxic/pens/Pens/hatch/agents/ember",
    "source": "estate__REORG-MANIFEST.txt"
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/config",
-   "new": "/home/toxic/pens/estate/config",
+   "old": "/home/toxic/pens/Pens/config",
+   "new": "/home/toxic/pens/Pens/config",
    "source": "estate__config__estate-ghost-path.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate/ranch",
+   "old": "/home/toxic/pens/Pens/ranch",
    "new": "/home/toxic/pens/ranch",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/ranch",
+   "old": "/home/toxic/pens/Pens/ranch",
    "new": "/home/toxic/pens/ranch",
    "source": "estate__config__estate-ghost-path.pairs"
   },
@@ -320,7 +320,7 @@
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate/barn",
+   "old": "/home/toxic/pens/Pens/barn",
    "new": "/home/toxic/pens/barn",
    "source": "estate__config__estate-ghost-path.pairs"
   },
@@ -375,7 +375,7 @@
   {
    "kind": "path",
    "old": "work/tau-extensions",
-   "new": "products/estate-orphans/tau-extensions",
+   "new": "products/Pens-orphans/tau-extensions",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
@@ -398,32 +398,32 @@
   },
   {
    "kind": "substr",
-   "old": "~/estate/skills-hub",
+   "old": "~/Pens/skills-hub",
    "new": "/home/toxic/pens/geode/products/azurite/skills",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "path",
-   "old": "/home/toxic/pens/estate",
-   "new": "/home/toxic/pens/estate",
+   "old": "/home/toxic/pens/Pens",
+   "new": "/home/toxic/pens/Pens",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "substr",
-   "old": "/home/toxic/pens/estate",
-   "new": "/home/toxic/pens/estate",
+   "old": "/home/toxic/pens/Pens",
+   "new": "/home/toxic/pens/Pens",
    "source": "estate__config__estate-ghost-path.pairs"
   },
   {
    "kind": "word",
-   "old": "/home/toxic/pens/estate",
-   "new": "/home/toxic/pens/estate",
+   "old": "/home/toxic/pens/Pens",
+   "new": "/home/toxic/pens/Pens",
    "source": "estate__config__estate-ghost-path.pairs"
   },
   {
    "kind": "word",
-   "old": "estate/byte-vision",
-   "new": "estate/feedlot",
+   "old": "Pens/byte-vision",
+   "new": "Pens/feedlot",
    "source": "estate__docs__feedlot-rename-full.pairs"
   },
   {
@@ -434,8 +434,8 @@
   },
   {
    "kind": "substr",
-   "old": "@estate/skills-hub",
-   "new": "@estate/azurite",
+   "old": "@Pens/skills-hub",
+   "new": "@Pens/azurite",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
@@ -482,20 +482,20 @@
   },
   {
    "kind": "substr",
-   "old": "estate-skills-hub",
+   "old": "Pens-skills-hub",
    "new": "azurite",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "path",
    "old": "devices/lg-webos",
-   "new": "products/estate-orphans/devices/lg-webos",
+   "new": "products/Pens-orphans/devices/lg-webos",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
    "kind": "substr",
    "old": "sovereign-router",
-   "new": "estate-router",
+   "new": "Pens-router",
    "source": "estate__docs__estate-rebrand.pairs"
   },
   {
@@ -512,20 +512,20 @@
   },
   {
    "kind": "substr",
-   "old": "estate/iostremtv",
-   "new": "estate/slate",
+   "old": "Pens/iostremtv",
+   "new": "Pens/slate",
    "source": "estate__docs__name-fix-iostremtv-to-slate.pairs"
   },
   {
    "kind": "substr",
-   "old": "estate/streamers",
-   "new": "estate/slate",
+   "old": "Pens/streamers",
+   "new": "Pens/slate",
    "source": "estate__docs__name-fix-streamers-to-slate.pairs"
   },
   {
    "kind": "substr",
-   "old": "estate/grasp-hub",
-   "new": "estate/azurite",
+   "old": "Pens/grasp-hub",
+   "new": "Pens/azurite",
    "source": "geode__docs__azurite-rename.pairs"
   },
   {
@@ -548,14 +548,14 @@
   },
   {
    "kind": "substr",
-   "old": "~/estate/skills/",
+   "old": "~/Pens/skills/",
    "new": "${SKILLS_ROOT}/",
    "source": "geode__products__azurite__rename.pairs"
   },
   {
    "kind": "path",
    "old": "barn/nativelink",
-   "new": "pens/estate/config/nativelink",
+   "new": "pens/Pens/config/nativelink",
    "source": "canonical-cutover-20261028.pairs"
   },
   {
@@ -639,7 +639,7 @@
   {
    "kind": "substr",
    "old": "sovereign-chat",
-   "new": "estate-chat",
+   "new": "Pens-chat",
    "source": "estate__docs__estate-rebrand.pairs"
   },
   {
@@ -674,8 +674,8 @@
   },
   {
    "kind": "substr",
-   "old": "estate/bornite",
-   "new": "estate/agele",
+   "old": "Pens/bornite",
+   "new": "Pens/agele",
    "source": "estate__docs__name-fix-bornite-to-agele.pairs"
   },
   {
@@ -692,7 +692,7 @@
   },
   {
    "kind": "substr",
-   "old": "estate/skills/",
+   "old": "Pens/skills/",
    "new": "${SKILLS_ROOT}/",
    "source": "geode__products__azurite__rename.pairs"
   },
@@ -716,8 +716,8 @@
   },
   {
    "kind": "substr",
-   "old": "estate/aether",
-   "new": "estate/slate",
+   "old": "Pens/aether",
+   "new": "Pens/slate",
    "source": "estate__docs__name-fix-aether-to-slate.pairs"
   },
   {
@@ -740,8 +740,8 @@
   },
   {
    "kind": "substr",
-   "old": "@estate/pinax",
-   "new": "@estate/mimetite",
+   "old": "@Pens/pinax",
+   "new": "@Pens/mimetite",
    "source": "geode__docs__mimetite-rename.pairs"
   },
   {
@@ -770,8 +770,8 @@
   },
   {
    "kind": "substr",
-   "old": "estate/flock",
-   "new": "estate/hodos",
+   "old": "Pens/flock",
+   "new": "Pens/hodos",
    "source": "estate__docs__hodos-rename.pairs"
   },
   {
@@ -806,8 +806,8 @@
   },
   {
    "kind": "substr",
-   "old": "estate/pinax",
-   "new": "estate/mimetite",
+   "old": "Pens/pinax",
+   "new": "Pens/mimetite",
    "source": "geode__docs__mimetite-rename.pairs"
   },
   {
@@ -1587,7 +1587,7 @@
   {
    "kind": "word",
    "old": "sovereign",
-   "new": "estate",
+   "new": "Pens",
    "source": "estate__docs__estate-rebrand.pairs"
   },
   {

@@ -57,13 +57,12 @@ export const a1_abscission: Module = {
 			"fs.writeFileSync(process.env.OGC_GCFILE, String(require('child_process').spawn('sleep',['30']).pid));" +
 			"console.log('AUXIN_BOOT');" +
 			"while(true){}";
-		const proc = Bun.spawn({
-			cmd: ["bun", "-e", childScript],
+		const proc = Bun.spawn(["bun", "-e", childScript], {
 			stdout: "pipe",
 			stderr: "pipe",
 			processGroupLeader: true,
 			env: { ...process.env, OGC_GCFILE: pidFile },
-		});
+		} as Parameters<typeof Bun.spawn>[1] & { processGroupLeader?: boolean });
 
 		const cgroup = `/sys/fs/cgroup/orchid_${process.pid}/${id}`;
 		const parentCg = `/sys/fs/cgroup/orchid_${process.pid}`;
@@ -131,7 +130,7 @@ export const a1_abscission: Module = {
 			detector: "a1_abscission",
 			flag: "a1_abscission",
 			artifact: "synthetic",
-			severity: reason === "AUXIN_COLLAPSE" ? "warn" : "info",
+			severity: String(reason) === "AUXIN_COLLAPSE" ? "warn" : "info",
 			title: `Abscission severed stalled branch via ${cgroupOk ? "cgroup.kill" : "pgroup SIGKILL"} (${reason})`,
 			detail: {
 				branchId: id,
