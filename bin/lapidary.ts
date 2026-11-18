@@ -9,6 +9,7 @@
  *   lapidary retire  <old-pen> <target-pen> [--dry-run] [--delete-repo]
  *   lapidary merge   <from-path> <into-path> [--dry-run]
  *   lapidary verify  <dir> <term>
+ *   lapidary rebrand <root> <from> <to> [--dry-run] [--undo]
  *
  * Each command lives in src/commands/*.ts; shared engine in src/core.ts.
  */
@@ -18,6 +19,7 @@ import { run as move } from "../src/commands/move.ts";
 import { run as retire } from "../src/commands/retire.ts";
 import { run as merge } from "../src/commands/merge.ts";
 import { run as verify } from "../src/commands/verify.ts";
+import { run as rebrand } from "../src/commands/rebrand.ts";
 
 // Public engine exports (used by lapidary.test.ts and embedders).
 export {
@@ -62,6 +64,7 @@ async function main(): Promise<void> {
 		case "retire": retire(rest); break;
 		case "merge": merge(rest); break;
 		case "verify": await verify(rest); break;
+		case "rebrand": rebrand(rest); break;
 		default:
 			console.error(`lapidary: unknown command "${cmd}"`);
 			console.log(HELP);

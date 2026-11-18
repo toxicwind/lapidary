@@ -1,5 +1,5 @@
 {
-  "name": "lapidary",
+  "name": "@geode/lapidary",
   "version": "1.0.0",
   "description": "geode's transform + detect engine (all-Bun)",
   "module": "sources/index.ts",

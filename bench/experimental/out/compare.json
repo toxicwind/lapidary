@@ -1,0 +1,72 @@
+{
+  "S1-structural": {
+    "strategy": "S1-structural",
+    "filesChanged": 3,
+    "edits": 29,
+    "ms": 1.3716370000000069,
+    "changed": {
+      "accounts.ts": "// fixture/src/accounts.ts — coordinated-rename fixture: CustomerAccount domain.\n// Ground truth: rename CustomerAccount → ClientAccount, processCustomerProfile → processClientProfile,\n// customerAccountId → clientAccountId. String literals with the old names must NOT change (symbol-only).\nexport class ClientAccount {\n  clientAccountId: number;\n  function Object() { [native code] }(id: number) { this.clientAccountId = id; }\n  processClientProfile(): string {\n    return `CustomerAccount[${this.clientAccountId}]`;\n  }\n}\nexport function makeClientAccount(id: number): ClientAccount {\n  return new ClientAccount(id);\n}\nexport const ACCOUNT_LABEL = \"CustomerAccount\"; // string literal — must stay",
+      "usage.ts": "// fixture/src/usage.ts — cross-file consumers of the CustomerAccount domain.\nimport { ClientAccount, makeClientAccount } from \"./accounts\";\n\nexport function render(acc: ClientAccount): string {\n  return acc.processClientProfile() + \":\" + acc.clientAccountId;\n}\n\nexport function build(seed: number): ClientAccount {\n  const a = makeClientAccount(seed);\n  return a;\n}\n\n// Local shadow with the same shape — must be renamed too (same symbol semantics).\nexport class ClientAccountView {\n  clientAccountId: string;\n  function Object() { [native code] }(id: string) { this.clientAccountId = id; }\n  processClientProfile(): string { return `view:${this.clientAccountId}`; }\n}\n\n// A DIFFERENT class with overlapping prefix — must NOT be renamed.\nexport class CustomerAccountant {\n  processClientProfile(): number { return 42; }\n}",
+      "main.ts": "// fixture/src/main.ts — entrypoint, JSON serialization of the domain.\nimport { ClientAccount } from \"./accounts\";\nimport { render, build, ClientAccountView, CustomerAccountant } from \"./usage\";\n\nconst acc = build(7);\nconst view = new ClientAccountView(\"v1\");\nconst accountant = new CustomerAccountant();\n\nexport function dump(): string {\n  return JSON.stringify({\n    rendered: render(acc),\n    view: view.processClientProfile(),\n    accountant: accountant.processClientProfile(),\n    label: \"CustomerAccount\", // string literal — must stay\n    type: ClientAccount.name,\n  });\n}"
+    },
+    "_score": {
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "goalMet": true,
+      "emergence": true
+    },
+    "_verify": {
+      "stale": 3,
+      "out": "stale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S1-structural/src/main.ts\nstale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S1-structural/src/usage.ts\nstale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S1-structural/src/accounts.ts\n\nfluxling-verify: 3 stale refs for \"CustomerAccount\" in /home/tox"
+    }
+  },
+  "S2-semantic": {
+    "strategy": "S2-semantic",
+    "filesChanged": 3,
+    "edits": 10,
+    "ms": 205.03153700000001,
+    "changed": {
+      "accounts.ts": "// fixture/src/accounts.ts — coordinated-rename fixture: CustomerAccount domain.\n// Ground truth: rename CustomerAccount → ClientAccount, processCustomerProfile → processClientProfile,\n// customerAccountId → clientAccountId. String literals with the old names must NOT change (symbol-only).\nexport class ClientAccount {\n  clientAccountId: number;\n  constructor(id: number) { this.clientAccountId = id; }\n  processClientProfile(): string {\n    return `CustomerAccount[${this.clientAccountId}]`;\n  }\n}\nexport function makeClientAccount(id: number): ClientAccount {\n  return new ClientAccount(id);\n}\nexport const ACCOUNT_LABEL = \"CustomerAccount\"; // string literal — must stay",
+      "main.ts": "// fixture/src/main.ts — entrypoint, JSON serialization of the domain.\nimport { ClientAccount } from \"./accounts\";\nimport { render, build, ClientAccountView, CustomerAccountant } from \"./usage\";\n\nconst acc = build(7);\nconst view = new ClientAccountView(\"v1\");\nconst accountant = new CustomerAccountant();\n\nexport function dump(): string {\n  return JSON.stringify({\n    rendered: render(acc),\n    view: view.processClientProfile(),\n    accountant: accountant.processClientProfile(),\n    label: \"CustomerAccount\", // string literal — must stay\n    type: ClientAccount.name,\n  });\n}",
+      "usage.ts": "// fixture/src/usage.ts — cross-file consumers of the CustomerAccount domain.\nimport { ClientAccount, makeClientAccount } from \"./accounts\";\n\nexport function render(acc: ClientAccount): string {\n  return acc.processClientProfile() + \":\" + acc.clientAccountId;\n}\n\nexport function build(seed: number): ClientAccount {\n  const a = makeClientAccount(seed);\n  return a;\n}\n\n// Local shadow with the same shape — must be renamed too (same symbol semantics).\nexport class ClientAccountView {\n  clientAccountId: string;\n  constructor(id: string) { this.clientAccountId = id; }\n  processClientProfile(): string { return `view:${this.clientAccountId}`; }\n}\n\n// A DIFFERENT class with overlapping prefix — must NOT be renamed.\nexport class CustomerAccountant {\n  processClientProfile(): number { return 42; }\n}"
+    },
+    "_score": {
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "goalMet": true,
+      "emergence": true
+    },
+    "_verify": {
+      "stale": 3,
+      "out": "stale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S2-semantic/src/main.ts\nstale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S2-semantic/src/usage.ts\nstale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S2-semantic/src/accounts.ts\n\nfluxling-verify: 3 stale refs for \"CustomerAccount\" in /home/toxic/pen"
+    }
+  },
+  "S3-intent": {
+    "strategy": "S3-intent",
+    "filesChanged": 1,
+    "edits": 3,
+    "ms": 5618.328402,
+    "changed": {
+      "accounts.ts": "// fixture/src/accounts.ts — coordinated-rename fixture: CustomerAccount domain.\n// Ground truth: rename CustomerAccount → ClientAccount, processCustomerProfile → processClientProfile,\n// customerAccountId → clientAccountId. String literals with the old names must NOT change (symbol-only).\nexport class ClientAccount {\n  clientAccountId: number;\n  constructor(id: number) { this.clientAccountId = id; }\n  processClientProfile(): string {\n    return `CustomerAccount[${this.clientAccountId}]`;\n  }\n}\nexport function makeClientAccount(id: number): ClientAccount {\n  return new ClientAccount(id);\n}\nexport const ACCOUNT_LABEL = \"CustomerAccount\"; // string literal — must stay"
+    },
+    "_meta": {
+      "diffExit": 0,
+      "applyExit": 1,
+      "diffOut": "--- diff (3 files, model default) ---\ndiff --git a/src/accounts.ts b/src/accounts.ts\n--- a/src/accounts.ts\n+++ b/src/accounts.ts\n@@ -4,14 +4,14 @@\n // customerAccountId → clientAccountId. String literals with the old names must NOT change (symbol-only).\n-export class CustomerAccount {\n-  customerAcc",
+      "applyOut": "fluxling apply: wrote 3 file(s)\nstale-ref(content): /home/toxic/pens/flux/products/fluxling/examples/usage_example.py\nstale-ref(content): /home/toxic/pens/flux/products/fluxling/fluxling/mutate.py\nstale-ref(content): /home/toxic/pens/flux/products/fluxling/docs/api.md\nstale-ref(content): /home/toxic"
+    },
+    "_score": {
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "goalMet": true,
+      "emergence": true
+    },
+    "_verify": {
+      "stale": 3,
+      "out": "stale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S3-intent/src/main.ts\nstale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S3-intent/src/usage.ts\nstale-ref(content): /home/toxic/pens/geode/products/lapidary/bench/experimental/out/S3-intent/src/accounts.ts\n\nfluxling-verify: 3 stale refs for \"CustomerAccount\" in /home/toxic/pens/geod"
+    }
+  }
+}
